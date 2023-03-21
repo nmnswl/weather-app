@@ -22,4 +22,22 @@ extension UIView {
             indicator.removeFromSuperview()
         }
     }
+    
+    /**
+     Method to add round corners
+     - parameter radius: radius for corners
+     */
+    func roundCornersWithRadius(_ radius: Double) {
+        layer.cornerRadius = radius
+    }
+    
+    /**
+     Method to add round corners
+     - parameter color: colour of border
+     - parameter width: width of border
+     */
+    func applyBorder(color: UIColor, width: Double) {
+        layer.borderColor = color.cgColor
+        layer.borderWidth = width
+    }
 }

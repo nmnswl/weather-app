@@ -340,13 +340,11 @@
 			isa = PBXGroup;
 			children = (
 				1BF5D75429CA3F78007C7EAC /* AppDelegate */,
-				1B4B8A3829C9A1280026E9D1 /* AppNavigation */,
 				1B4B8A5429C9DB420026E9D1 /* Constants */,
 				1B4B8A2329C95F3C0026E9D1 /* Modules */,
 				1B4B8A2829C98C300026E9D1 /* Utilities */,
-				1B83E15029C893AC00443D2D /* Main.storyboard */,
+				1BF5D75529CA4B28007C7EAC /* Storyboard */,
 				1B83E15329C893AF00443D2D /* Assets.xcassets */,
-				1B83E15529C893AF00443D2D /* LaunchScreen.storyboard */,
 				1B83E15829C893AF00443D2D /* Info.plist */,
 			);
 			path = WeatherApp;
@@ -355,9 +353,19 @@
 		1BF5D75429CA3F78007C7EAC /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				1B4B8A3829C9A1280026E9D1 /* AppNavigation */,
 				1B83E14A29C893AC00443D2D /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		1BF5D75529CA4B28007C7EAC /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				1B83E15029C893AC00443D2D /* Main.storyboard */,
+				1B83E15529C893AF00443D2D /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

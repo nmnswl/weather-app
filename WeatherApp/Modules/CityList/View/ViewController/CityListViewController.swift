@@ -65,7 +65,7 @@ class CityListViewController: UIViewController {
     }
     
     //MARK: - Button action -
-    @IBAction func addCityButtonAction(_ sender: UIButton) {
+    @IBAction private func addCityButtonAction(_ sender: UIButton) {
         guard let addCityViewController = UIStoryboard.main.instantiateViewController(identifier: AddCityViewController.identifier) as? AddCityViewController else { return }
         topMostViewController().navigationController?.pushViewController(addCityViewController, animated: true)
     }

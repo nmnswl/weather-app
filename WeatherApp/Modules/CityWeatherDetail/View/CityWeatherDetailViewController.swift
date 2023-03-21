@@ -97,7 +97,7 @@ class CityWeatherDetailViewController: UIViewController {
     }
     
     //MARK: - API calling
-    func loadWeatherDetails() {
+    private func loadWeatherDetails() {
         viewModel.fetchWeatherInfo(for: cityName, in: unit)
     }
     
@@ -108,12 +108,12 @@ class CityWeatherDetailViewController: UIViewController {
     
     
     //MARK: - View setup -
-    func initialViewSetup() {
+    private func initialViewSetup() {
         //Initial setup
         cityNameLabel.text = cityName
     }
     
-    func setupUI(with weatherInfo: WeatherInfoResponse) {
+    private func setupUI(with weatherInfo: WeatherInfoResponse) {
         //Set up UI with weather response
         let temperatureUnit = unit.temperatureUnit
         let windSpeedUnit = unit.windSpeedUnit
@@ -159,7 +159,7 @@ class CityWeatherDetailViewController: UIViewController {
     }
     
     //MARK: - Button action -
-    @IBAction func actionBack(_ sender: UIButton) {
+    @IBAction private func actionBack(_ sender: UIButton) {
         navigationController?.popToController(CityListViewController.self)
     }
 }

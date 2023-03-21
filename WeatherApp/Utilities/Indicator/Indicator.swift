@@ -9,7 +9,7 @@ final class Indicator: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .black.withAlphaComponent(0.5)
+        backgroundColor = .black.withAlphaComponent(0.2)
         if #available(iOS 13.0, *) {
             activityIndicator.style = .large
         } else {

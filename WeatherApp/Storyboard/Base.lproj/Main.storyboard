@@ -50,7 +50,10 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter city name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g80-zx-psg">
-                                <rect key="frame" x="25" y="153" width="343" height="34"/>
+                                <rect key="frame" x="25" y="153" width="343" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="sxj-KS-qfg"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -59,7 +62,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pm-BO-Oqg">
-                                <rect key="frame" x="152" y="237" width="89" height="40"/>
+                                <rect key="frame" x="152" y="253" width="89" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="s5b-xN-bqn"/>
@@ -86,6 +89,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addCityButton" destination="8pm-BO-Oqg" id="QIO-4b-gOj"/>
                         <outlet property="cityNameTextField" destination="g80-zx-psg" id="mWa-63-bc4"/>
                     </connections>
                 </viewController>

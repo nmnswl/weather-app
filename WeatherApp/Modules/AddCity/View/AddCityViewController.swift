@@ -8,6 +8,7 @@ import UIKit
 class AddCityViewController: UIViewController {
 
     @IBOutlet private weak var cityNameTextField: UITextField!
+    @IBOutlet private weak var addCityButton: UIButton!
     
     private lazy var viewModel: AddCityViewModelType = {
         return AddCityViewModel()
@@ -16,6 +17,12 @@ class AddCityViewController: UIViewController {
     //MARK: - View life cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    
+    //MARK: - UI setup -
+    func setupUI() {
+        addCityButton.layer.cornerRadius = 10
     }
     
     //MARK: - Text field editing -
@@ -24,7 +31,7 @@ class AddCityViewController: UIViewController {
     }
     
     //MARK: - Button action -
-    @IBAction func addCityAction(_ sender: UIButton) {
+    @IBAction private func addCityAction(_ sender: UIButton) {
         if !viewModel.isCityNameEntered() {
             topMostViewController().showAlertControllerWith(title: Constants.Alert.validationAlertTitle,
                                                             message: Constants.Alert.cityNameBlank,
@@ -36,7 +43,7 @@ class AddCityViewController: UIViewController {
         topMostViewController().navigationController?.pushViewController(detailViewController, animated: true)
     }
     
-    @IBAction func actionBack(_ sender: UIButton) {
+    @IBAction private func actionBack(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
 }

@@ -26,8 +26,8 @@ class AddCityViewController: UIViewController {
     //MARK: - Button action -
     @IBAction func addCityAction(_ sender: UIButton) {
         if !viewModel.isCityNameEntered() {
-            topMostViewController().showAlertControllerWith(title: "",
-                                                            message: "",
+            topMostViewController().showAlertControllerWith(title: Constants.Alert.validationAlertTitle,
+                                                            message: Constants.Alert.cityNameBlank,
                                                             buttons: .ok(nil))
             return
         }

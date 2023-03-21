@@ -7,7 +7,7 @@ import Foundation
 protocol BaseViewModel {
     var showLoadingClosure: (((() -> Void)?) -> Void)? { get set }
     var hideLoadingClosure: (((() -> Void)?) -> Void)? { get set }
-    var showAlertClosure: ((_ message: String, _ error: Error?) -> ())? { get set }
+    var showAlertClosure: ((_ error: Error?) -> ())? { get set }
 }
 
 protocol CityWeatherDetailViewModelType: BaseViewModel {
@@ -18,7 +18,7 @@ protocol CityWeatherDetailViewModelType: BaseViewModel {
 final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
     var showLoadingClosure: (((() -> Void)?) -> Void)?
     var hideLoadingClosure: (((() -> Void)?) -> Void)?
-    var showAlertClosure: ((String, Error?) -> ())?
+    var showAlertClosure: ((Error?) -> ())?
     var showWeatherInfo: ((WeatherInfoResponse) -> Void)?
     
     private lazy var weatherInfoNetworkService: WeatherInfoNetworkServiceProtocol = {
@@ -39,7 +39,7 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
             case .success(let weatherInfo):
                 self.showWeatherInfo?(weatherInfo)
             case .failure(let error):
-                self.showAlertClosure?("", error)
+                self.showAlertClosure?(error)
             }
         }
     }

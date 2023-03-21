@@ -17,6 +17,22 @@ enum Units {
         case .imperial: return "imperial"
         }
     }
+    
+    var temperatureUnit: String {
+        switch self {
+        case .metric: return "°C"
+        case .standard: return "K"
+        case .imperial: return "°F"
+        }
+    }
+    
+    var windSpeedUnit: String {
+        switch self {
+        case .metric: return "metre/sec"
+        case .standard: return "metre/sec"
+        case .imperial: return "miles/hour"
+        }
+    }
 }
 
 //Handling methods

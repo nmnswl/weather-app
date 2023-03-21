@@ -9,7 +9,7 @@ class AddCityViewController: UIViewController {
 
     @IBOutlet private weak var cityNameTextField: UITextField!
     
-    lazy var viewModel: AddCityViewModelType = {
+    private lazy var viewModel: AddCityViewModelType = {
         return AddCityViewModel()
     }()
     
@@ -25,6 +25,15 @@ class AddCityViewController: UIViewController {
     
     //MARK: - Button action -
     @IBAction func addCityAction(_ sender: UIButton) {
+        if !viewModel.isCityNameEntered() {
+            topMostViewController().showAlertControllerWith(title: "",
+                                                            message: "",
+                                                            buttons: .ok(nil))
+            return
+        }
+        guard let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController else { return }
+        detailViewController.setCityName(as: viewModel.getCityName())
+        topMostViewController().navigationController?.pushViewController(detailViewController, animated: true)
     }
     
     @IBAction func actionBack(_ sender: UIButton) {

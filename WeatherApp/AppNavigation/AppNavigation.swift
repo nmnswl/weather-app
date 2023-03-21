@@ -5,24 +5,24 @@
 import UIKit
 
 protocol Navigator {
-    func showAddCityView()
+    func showCityListView()
 }
 
 enum Destination {
-    case addCity
+    case cityList
 }
 
 class AppNavigator: Navigator {
     
-    func showAddCityView() {
-        redirectTo(destination: .addCity)
+    func showCityListView() {
+        redirectTo(destination: .cityList)
     }
     
     private func redirectTo(destination: Destination) {
         switch destination {
-        case .addCity:
-            let addCityViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "AddCityViewController")
-            let navigationController = UINavigationController(rootViewController: addCityViewController)
+        case .cityList:
+            guard let cityListViewController = UIStoryboard.main.instantiateViewController(identifier: CityListViewController.identifier) as? CityListViewController else { return }
+            let navigationController = UINavigationController(rootViewController: cityListViewController)
             navigationController.isNavigationBarHidden = true
             AppDelegate.shared.window?.rootViewController = navigationController
             AppDelegate.shared.window?.makeKeyAndVisible()

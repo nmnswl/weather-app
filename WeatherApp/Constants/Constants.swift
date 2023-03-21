@@ -15,4 +15,8 @@ struct Constants {
         static let noDataError = "Blank data in response"
         static let generalError = "An error has occurred. Please try again."
     }
+    
+    struct NotificationKeys {
+        static let weatherInfo = "weatherInfo"
+    }
 }

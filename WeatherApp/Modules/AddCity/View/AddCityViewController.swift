@@ -31,7 +31,7 @@ class AddCityViewController: UIViewController {
                                                             buttons: .ok(nil))
             return
         }
-        guard let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController else { return }
+        guard let detailViewController = UIStoryboard.main.instantiateViewController(identifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController else { return }
         detailViewController.setCityName(as: viewModel.getCityName())
         topMostViewController().navigationController?.pushViewController(detailViewController, animated: true)
     }

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate {
     func startApp() {
-        appNavigator.showAddCityView()
+        appNavigator.showCityListView()
     }
 }
 

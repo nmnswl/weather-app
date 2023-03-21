@@ -7,22 +7,22 @@ import WeatherInformation
 
 class CityWeatherDetailViewController: UIViewController {
     
-    @IBOutlet weak var cityNameLabel: UILabel!
-    @IBOutlet weak var weatherImageView: UIImageView!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var weatherDescriptionLabel: UILabel!
-    @IBOutlet weak var humidityLabel: UILabel!
-    @IBOutlet weak var pressureLabel: UILabel!
-    @IBOutlet weak var minTempLabel: UILabel!
-    @IBOutlet weak var maxTempLabel: UILabel!
-    @IBOutlet weak var visibilityLabel: UILabel!
-    @IBOutlet weak var windSpeedLabel: UILabel!
-    @IBOutlet weak var maxTempView: UIView!
-    @IBOutlet weak var minTempView: UIView!
-    @IBOutlet weak var humidityView: UIView!
-    @IBOutlet weak var pressureView: UIView!
-    @IBOutlet weak var windSpeedView: UIView!
-    @IBOutlet weak var visibilityView: UIView!
+    @IBOutlet private weak var cityNameLabel: UILabel!
+    @IBOutlet private weak var weatherImageView: UIImageView!
+    @IBOutlet private weak var temperatureLabel: UILabel!
+    @IBOutlet private weak var weatherDescriptionLabel: UILabel!
+    @IBOutlet private weak var humidityLabel: UILabel!
+    @IBOutlet private weak var pressureLabel: UILabel!
+    @IBOutlet private weak var minTempLabel: UILabel!
+    @IBOutlet private weak var maxTempLabel: UILabel!
+    @IBOutlet private weak var visibilityLabel: UILabel!
+    @IBOutlet private weak var windSpeedLabel: UILabel!
+    @IBOutlet private weak var maxTempView: UIView!
+    @IBOutlet private weak var minTempView: UIView!
+    @IBOutlet private weak var humidityView: UIView!
+    @IBOutlet private weak var pressureView: UIView!
+    @IBOutlet private weak var windSpeedView: UIView!
+    @IBOutlet private weak var visibilityView: UIView!
     
     private lazy var viewModel: CityWeatherDetailViewModelType = {
         return CityWeatherDetailViewModel()
@@ -89,6 +89,9 @@ class CityWeatherDetailViewController: UIViewController {
         
         viewModel.showWeatherInfo = { [weak self] (weatherInfo) in
             guard let self = self else { return }
+            NotificationCenter.default.post(name: .weatherInfoFetched,
+                                            object: nil,
+                                            userInfo: [Constants.NotificationKeys.weatherInfo: weatherInfo])
             self.setupUI(with: weatherInfo)
         }
     }
@@ -157,6 +160,6 @@ class CityWeatherDetailViewController: UIViewController {
     
     //MARK: - Button action -
     @IBAction func actionBack(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToController(CityListViewController.self)
     }
 }

@@ -43,7 +43,7 @@ class CityListViewController: UIViewController {
         viewModel.showWeatherDetails = { (cityViewModel) in
             guard let detailViewController = UIStoryboard.main.instantiateViewController(withIdentifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController,
             let navigationController = AppDelegate.shared.window?.rootViewController as? UINavigationController else { return }
-            detailViewController.setCityName(as: cityViewModel.cityName ?? "")
+            detailViewController.setCityName(as: cityViewModel.cityName ?? "", navigationFrom: .cityList)
             navigationController.pushViewController(detailViewController, animated: true)
         }
     }

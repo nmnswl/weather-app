@@ -30,6 +30,8 @@ class CityWeatherDetailViewController: UIViewController {
     
     private var cityName = ""
     private var unit = Units.metric
+    private var navigationFrom: NavigationFrom = .addCity
+    private var weatherInfo: WeatherInfoResponse?
 
     //MARK: - View life cycle -
     override func viewDidLoad() {
@@ -89,10 +91,9 @@ class CityWeatherDetailViewController: UIViewController {
         
         viewModel.showWeatherInfo = { [weak self] (weatherInfo) in
             guard let self = self else { return }
-            NotificationCenter.default.post(name: .weatherInfoFetched,
-                                            object: nil,
-                                            userInfo: [Constants.NotificationKeys.weatherInfo: weatherInfo])
-            self.setupUI(with: weatherInfo)
+            self.weatherInfo = weatherInfo
+            self.postNotificationIfNecessary()
+            self.setupUI()
         }
     }
     
@@ -102,8 +103,10 @@ class CityWeatherDetailViewController: UIViewController {
     }
     
     //MARK: - Handle city name
-    func setCityName(as name: String) {
+    func setCityName(as name: String, navigationFrom: NavigationFrom = .addCity) {
         cityName = name
+        self.navigationFrom = navigationFrom
+        print(navigationFrom)
     }
     
     
@@ -114,8 +117,9 @@ class CityWeatherDetailViewController: UIViewController {
         weatherImageView.roundCornersWithRadius(10)
     }
     
-    private func setupUI(with weatherInfo: WeatherInfoResponse) {
+    private func setupUI() {
         //Set up UI with weather response
+        guard let weatherInfo = self.weatherInfo else { return }
         let temperatureUnit = unit.temperatureUnit
         let windSpeedUnit = unit.windSpeedUnit
         if let main = weatherInfo.main {
@@ -148,7 +152,7 @@ class CityWeatherDetailViewController: UIViewController {
             visibilityView.isHidden = true
         }
         if let wind = weatherInfo.wind, let speed = wind.speed {
-            windSpeedLabel.text = "\(speed)\(windSpeedUnit)"
+            windSpeedLabel.text = "\(speed) \(windSpeedUnit)"
         } else {
             windSpeedView.isHidden = true
         }
@@ -157,6 +161,17 @@ class CityWeatherDetailViewController: UIViewController {
     private func handleVisibilityOf(view: UIView, when value: Double?) {
         //Hide the view when the API does not provide some weather info in response
         view.isHidden = value == nil
+    }
+    
+    private func postNotificationIfNecessary() {
+        guard let weatherInfo = self.weatherInfo else { return }
+        switch navigationFrom {
+        case .addCity:
+            NotificationCenter.default.post(name: .weatherInfoFetched,
+                                            object: nil,
+                                            userInfo: [Constants.NotificationKeys.weatherInfo: weatherInfo])
+        default: break
+        }
     }
     
     //MARK: - Button action -

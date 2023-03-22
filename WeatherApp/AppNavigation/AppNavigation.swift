@@ -4,6 +4,10 @@
 
 import UIKit
 
+enum NavigationFrom {
+    case cityList, addCity
+}
+
 protocol Navigator {
     func showCityListView()
 }

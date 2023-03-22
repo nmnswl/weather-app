@@ -26,6 +26,7 @@ class CityTableViewCell: UITableViewCell {
         super.awakeFromNib()
         roundView.roundCornersWithRadius(10)
         roundView.applyBorder(color: .black, width: 1)
+        weatherImageView.roundCornersWithRadius(8)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

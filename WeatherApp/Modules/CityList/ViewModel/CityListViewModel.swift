@@ -7,7 +7,6 @@ import Foundation
 protocol CityListViewModelType {
     var reloadTable: (() -> Void)? { get set }
     var showWeatherDetails: ((CityCellViewModel) -> Void)? { get set }
-    func getCities()
     func numberOfCities() -> Int
     func getCellViewModelAt(at indexPath: IndexPath) -> CityCellViewModel
     func updateWeatherInfo(with info: WeatherInfoResponse)
@@ -22,21 +21,7 @@ final class CityListViewModel: CityListViewModelType {
         }
     }
     
-    private var cityCellViewModels = [CityCellViewModel]() {
-        didSet {
-            reloadTable?()
-        }
-    }
-    
-    func getCities() {
-        let cityCellViewModel1 = CityCellViewModel(cityName: "Kanpur",
-                                                  temperature: 20,
-                                                  icon: "01d")
-        let cityCellViewModel2 = CityCellViewModel(cityName: "Goa",
-                                                  temperature: 18,
-                                                  icon: "01d")
-        cityCellViewModels = [cityCellViewModel1, cityCellViewModel2]
-    }
+    private var cityCellViewModels = [CityCellViewModel]()
     
     func numberOfCities() -> Int {
         cityCellViewModels.count
@@ -52,6 +37,7 @@ final class CityListViewModel: CityListViewModelType {
                                                   temperature: weatherInfo.main?.temp ?? 0.0,
                                                   icon: weatherInfo.weather?.first?.icon ?? "")
         cityCellViewModel.didSelectCell = {
+            //Handler for selecting a city
             self.showWeatherDetails?(cityCellViewModel)
         }
         return cityCellViewModel
@@ -62,10 +48,10 @@ final class CityListViewModel: CityListViewModelType {
     }
     
     private func addToCityList() {
-        var cityViewModels = [CityCellViewModel]()
+        //Add to city list
         if let cityCellViewModel  = createCellModel() {
-            cityViewModels.append(cityCellViewModel)
+            cityCellViewModels.append(cityCellViewModel)
+            reloadTable?()
         }
-        cityCellViewModels = cityViewModels
     }
 }

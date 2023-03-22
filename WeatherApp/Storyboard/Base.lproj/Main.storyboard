@@ -182,10 +182,11 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IW0-Ur-oYC">
-                                                                <rect key="frame" x="348" y="27" width="30" height="30"/>
+                                                                <rect key="frame" x="346" y="25" width="32" height="34"/>
+                                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="30" id="0hG-Qu-WPF"/>
-                                                                    <constraint firstAttribute="height" constant="30" id="4CS-33-mOn"/>
+                                                                    <constraint firstAttribute="width" constant="32" id="0hG-Qu-WPF"/>
+                                                                    <constraint firstAttribute="height" constant="34" id="4CS-33-mOn"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUF-KJ-RuE">

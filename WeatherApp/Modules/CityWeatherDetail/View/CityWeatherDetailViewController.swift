@@ -111,6 +111,7 @@ class CityWeatherDetailViewController: UIViewController {
     private func initialViewSetup() {
         //Initial setup
         cityNameLabel.text = cityName
+        weatherImageView.roundCornersWithRadius(10)
     }
     
     private func setupUI(with weatherInfo: WeatherInfoResponse) {

@@ -21,26 +21,27 @@ class AddCityViewController: UIViewController {
     }
     
     //MARK: - UI setup -
-    func setupUI() {
+    private func setupUI() {
         addCityButton.layer.cornerRadius = 10
     }
     
     //MARK: - Text field editing -
-    @IBAction func textFieldEditingChanged(_ sender: UITextField) {
+    @IBAction private func textFieldEditingChanged(_ sender: UITextField) {
         viewModel.updateCityName(with: sender.text?.trim ?? "")
     }
     
     //MARK: - Button action -
     @IBAction private func addCityAction(_ sender: UIButton) {
         if !viewModel.isCityNameEntered() {
-            topMostViewController().showAlertControllerWith(title: Constants.Alert.validationAlertTitle,
+            showAlertControllerWith(title: Constants.Alert.validationAlertTitle,
                                                             message: Constants.Alert.cityNameBlank,
                                                             buttons: .ok(nil))
             return
         }
-        guard let detailViewController = UIStoryboard.main.instantiateViewController(identifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController else { return }
+        guard let detailViewController = UIStoryboard.main.instantiateViewController(identifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController,
+        let navigationController = AppDelegate.shared.window?.rootViewController as? UINavigationController else { return }
         detailViewController.setCityName(as: viewModel.getCityName())
-        topMostViewController().navigationController?.pushViewController(detailViewController, animated: true)
+        navigationController.pushViewController(detailViewController, animated: true)
     }
     
     @IBAction private func actionBack(_ sender: UIButton) {

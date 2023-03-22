@@ -33,13 +33,15 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
     func fetchWeatherInfo(for city: String, in units: Units) {
         self.showLoadingClosure?(nil)
         weatherInfoNetworkService.fetchWeatherInfo(for: city, in: units) { [weak self] result in
-            guard let self = self else { return }
-            self.hideLoadingClosure?(nil)
-            switch result {
-            case .success(let weatherInfo):
-                self.showWeatherInfo?(weatherInfo)
-            case .failure(let error):
-                self.showAlertClosure?(error)
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.hideLoadingClosure?(nil)
+                switch result {
+                case .success(let weatherInfo):
+                    self.showWeatherInfo?(weatherInfo)
+                case .failure(let error):
+                    self.showAlertClosure?(error)
+                }
             }
         }
     }

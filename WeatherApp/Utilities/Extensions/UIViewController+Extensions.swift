@@ -11,24 +11,6 @@ protocol Identifiable {
 extension UIViewController: Identifiable {
     static var identifier: String { return String(describing: self) }
     
-    func topMostViewController() -> UIViewController {
-        //Returns the top most view controller
-        let rootViewController = AppDelegate.shared.window?.rootViewController ?? UIViewController()
-        return rootViewController.topViewController()
-    }
-    
-    private func topViewController() -> UIViewController {
-        if let presentedViewController = self.presentedViewController {
-            return presentedViewController.topViewController()
-        }
-        
-        if let navigationController = self as? UINavigationController {
-            return navigationController.visibleViewController?.topViewController() ?? navigationController
-        }
-        
-        return self
-    }
-    
     /**
      Method used to display alert controller
      - parameter title: Title for the alert

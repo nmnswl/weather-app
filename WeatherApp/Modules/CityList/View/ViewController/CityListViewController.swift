@@ -36,16 +36,15 @@ class CityListViewController: UIViewController {
     private func setupViewModel() {
         viewModel.reloadTable = { [weak self] in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.noCityLabel.isHidden = true
-                self.tableView.reloadData()
-            }
+            self.noCityLabel.isHidden = true
+            self.tableView.reloadData()
         }
         
-        viewModel.showWeatherDetails = { [unowned self] (cityViewModel) in
-            guard let detailViewController = UIStoryboard.main.instantiateViewController(withIdentifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController else { return }
+        viewModel.showWeatherDetails = { (cityViewModel) in
+            guard let detailViewController = UIStoryboard.main.instantiateViewController(withIdentifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController,
+            let navigationController = AppDelegate.shared.window?.rootViewController as? UINavigationController else { return }
             detailViewController.setCityName(as: cityViewModel.cityName ?? "")
-            topMostViewController().navigationController?.pushViewController(detailViewController, animated: true)
+            navigationController.pushViewController(detailViewController, animated: true)
         }
     }
     
@@ -66,8 +65,9 @@ class CityListViewController: UIViewController {
     
     //MARK: - Button action -
     @IBAction private func addCityButtonAction(_ sender: UIButton) {
-        guard let addCityViewController = UIStoryboard.main.instantiateViewController(identifier: AddCityViewController.identifier) as? AddCityViewController else { return }
-        topMostViewController().navigationController?.pushViewController(addCityViewController, animated: true)
+        guard let addCityViewController = UIStoryboard.main.instantiateViewController(identifier: AddCityViewController.identifier) as? AddCityViewController,
+        let navigationController = AppDelegate.shared.window?.rootViewController as? UINavigationController else { return }
+        navigationController.pushViewController(addCityViewController, animated: true)
     }
 }
 

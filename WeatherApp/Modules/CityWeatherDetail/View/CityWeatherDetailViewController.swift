@@ -56,32 +56,32 @@ class CityWeatherDetailViewController: UIViewController {
             if let apiError = error as? APIError {
                 switch apiError {
                 case .serverError:
-                    self.topMostViewController().showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
+                    self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
                                                                          message: Constants.Alert.serverError,
                                                                          buttons: .ok(nil))
                 case .decodingError:
-                    self.topMostViewController().showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
+                    self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
                                                                          message: Constants.Alert.decodingError,
                                                                          buttons: .ok(nil))
                 case .noData:
-                    self.topMostViewController().showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
+                    self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
                                                                          message: Constants.Alert.noDataError,
                                                                          buttons: .ok(nil))
                 case .requestError(let error):
                     if let urlError = error as? URLError, urlError.code == .notConnectedToInternet {
                         //Showing alert when device is not connected to the internet
-                        self.topMostViewController().showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
+                        self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
                                                                              message: Constants.Alert.internetError,
                                                                              buttons: .ok(nil))
                     } else {
-                        self.topMostViewController().showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
+                        self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
                                                                              message: error.localizedDescription,
                                                                              buttons: .ok(nil))
                     }
                 default: break
                 }
             } else {
-                self.topMostViewController().showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
+                self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
                                                                      message: Constants.Alert.generalError,
                                                                      buttons: .ok(nil))
             }

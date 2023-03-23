@@ -106,7 +106,6 @@ class CityWeatherDetailViewController: UIViewController {
     func setCityName(as name: String, navigationFrom: NavigationFrom = .addCity) {
         cityName = name
         self.navigationFrom = navigationFrom
-        print(navigationFrom)
     }
     
     
@@ -163,6 +162,7 @@ class CityWeatherDetailViewController: UIViewController {
         view.isHidden = value == nil
     }
     
+    //MARK: - Notification posting -
     private func postNotificationIfNecessary() {
         guard let weatherInfo = self.weatherInfo else { return }
         switch navigationFrom {

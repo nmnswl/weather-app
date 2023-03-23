@@ -4,12 +4,14 @@
 
 import Foundation
 
+typealias CellSelection = (() -> Void)
+
 protocol Pressable {
-    var didSelectCell: (() -> Void)? { get set }
+    var didSelectCell: CellSelection? { get set }
 }
 
 struct CityCellViewModel: Pressable {
-    var didSelectCell: (() -> Void)?
+    var didSelectCell: CellSelection?
     var cityName: String?
     var temperature: Double?
     var icon: String?

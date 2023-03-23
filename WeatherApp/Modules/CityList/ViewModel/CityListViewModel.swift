@@ -4,17 +4,20 @@
 
 import Foundation
 
+typealias ReloadClosure = (() -> Void)
+typealias WeatherDetailsPresentation = ((CityCellViewModel) -> Void)
+
 protocol CityListViewModelType {
-    var reloadTable: (() -> Void)? { get set }
-    var showWeatherDetails: ((CityCellViewModel) -> Void)? { get set }
+    var reloadTable: ReloadClosure? { get set }
+    var showWeatherDetails: WeatherDetailsPresentation? { get set }
     func numberOfCities() -> Int
     func getCellViewModelAt(at indexPath: IndexPath) -> CityCellViewModel
     func updateWeatherInfo(with info: WeatherInfoResponse)
 }
 
 final class CityListViewModel: CityListViewModelType {
-    var reloadTable: (() -> Void)?
-    var showWeatherDetails: ((CityCellViewModel) -> Void)?
+    var reloadTable: ReloadClosure?
+    var showWeatherDetails: WeatherDetailsPresentation?
     private var weatherInfo: WeatherInfoResponse? {
         didSet {
             addToCityList()

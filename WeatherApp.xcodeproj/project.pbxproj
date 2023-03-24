@@ -25,7 +25,7 @@
 		1B4B8A5329C9DAB30026E9D1 /* Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A5229C9DAB30026E9D1 /* Indicator.swift */; };
 		1B4B8A5629C9DB540026E9D1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A5529C9DB540026E9D1 /* Constants.swift */; };
 		1B4B8A6029C9F7A60026E9D1 /* CityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A5F29C9F7A60026E9D1 /* CityListViewModel.swift */; };
-		1B4B8A6429C9F84F0026E9D1 /* CityCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A6329C9F84F0026E9D1 /* CityCellViewModel.swift */; };
+		1B4B8A6429C9F84F0026E9D1 /* CityCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A6329C9F84F0026E9D1 /* CityCellModel.swift */; };
 		1B4B8A6629C9F9D50026E9D1 /* CityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A6529C9F9D50026E9D1 /* CityListViewController.swift */; };
 		1B4B8A6A29C9FC9D0026E9D1 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A6829C9FC9D0026E9D1 /* CityTableViewCell.swift */; };
 		1B4B8A6B29C9FC9D0026E9D1 /* CityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B4B8A6929C9FC9D0026E9D1 /* CityTableViewCell.xib */; };
@@ -71,7 +71,7 @@
 		1B4B8A5229C9DAB30026E9D1 /* Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indicator.swift; sourceTree = "<group>"; };
 		1B4B8A5529C9DB540026E9D1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1B4B8A5F29C9F7A60026E9D1 /* CityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewModel.swift; sourceTree = "<group>"; };
-		1B4B8A6329C9F84F0026E9D1 /* CityCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCellViewModel.swift; sourceTree = "<group>"; };
+		1B4B8A6329C9F84F0026E9D1 /* CityCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCellModel.swift; sourceTree = "<group>"; };
 		1B4B8A6529C9F9D50026E9D1 /* CityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewController.swift; sourceTree = "<group>"; };
 		1B4B8A6829C9FC9D0026E9D1 /* CityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		1B4B8A6929C9FC9D0026E9D1 /* CityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityTableViewCell.xib; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				1B4B8A5F29C9F7A60026E9D1 /* CityListViewModel.swift */,
-				1B4B8A6329C9F84F0026E9D1 /* CityCellViewModel.swift */,
+				1B4B8A6329C9F84F0026E9D1 /* CityCellModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -457,7 +457,7 @@
 				1B4B8A6029C9F7A60026E9D1 /* CityListViewModel.swift in Sources */,
 				1B83E14B29C893AC00443D2D /* AppDelegate.swift in Sources */,
 				1B4B8A4E29C9C37C0026E9D1 /* AlertEssentials.swift in Sources */,
-				1B4B8A6429C9F84F0026E9D1 /* CityCellViewModel.swift in Sources */,
+				1B4B8A6429C9F84F0026E9D1 /* CityCellModel.swift in Sources */,
 				1B4B8A2729C95FB50026E9D1 /* AddCityViewModel.swift in Sources */,
 				1B4B8A3429C98E8A0026E9D1 /* APIKeyHandler.swift in Sources */,
 				1B4B8A5329C9DAB30026E9D1 /* Indicator.swift in Sources */,

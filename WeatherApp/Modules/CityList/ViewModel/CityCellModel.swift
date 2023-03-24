@@ -1,5 +1,5 @@
 //
-//  CityCellViewModel.swift
+//  CityCellModel.swift
 //  WeatherApp
 
 import Foundation
@@ -10,7 +10,7 @@ protocol Pressable {
     var didSelectCell: CellSelection? { get set }
 }
 
-struct CityCellViewModel: Pressable {
+struct CityCellModel: Pressable {
     var didSelectCell: CellSelection?
     var cityName: String?
     var temperature: Double?

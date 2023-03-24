@@ -5,13 +5,13 @@
 import Foundation
 
 typealias ReloadClosure = (() -> Void)
-typealias WeatherDetailsPresentation = ((CityCellViewModel) -> Void)
+typealias WeatherDetailsPresentation = ((CityCellModel) -> Void)
 
 protocol CityListViewModelType {
     var reloadTable: ReloadClosure? { get set }
     var showWeatherDetails: WeatherDetailsPresentation? { get set }
     func numberOfCities() -> Int
-    func getCellViewModelAt(at indexPath: IndexPath) -> CityCellViewModel
+    func getCellViewModelAt(at indexPath: IndexPath) -> CityCellModel
     func updateWeatherInfo(with info: WeatherInfoResponse)
 }
 
@@ -24,26 +24,26 @@ final class CityListViewModel: CityListViewModelType {
         }
     }
     
-    private var cityCellViewModels = [CityCellViewModel]()
+    private var cityCellModels = [CityCellModel]()
     
     func numberOfCities() -> Int {
-        cityCellViewModels.count
+        cityCellModels.count
     }
     
-    func getCellViewModelAt(at indexPath: IndexPath) -> CityCellViewModel {
-        cityCellViewModels[indexPath.row]
+    func getCellViewModelAt(at indexPath: IndexPath) -> CityCellModel {
+        cityCellModels[indexPath.row]
     }
     
-    private func createCellModel() -> CityCellViewModel? {
+    private func createCellModel() -> CityCellModel? {
         guard let weatherInfo = weatherInfo else { return nil }
-        var cityCellViewModel = CityCellViewModel(cityName: weatherInfo.name ?? "",
+        var cityCellModel = CityCellModel(cityName: weatherInfo.name ?? "",
                                                   temperature: weatherInfo.main?.temp ?? 0.0,
                                                   icon: weatherInfo.weather?.first?.icon ?? "")
-        cityCellViewModel.didSelectCell = {
+        cityCellModel.didSelectCell = {
             //Handler for selecting a city
-            self.showWeatherDetails?(cityCellViewModel)
+            self.showWeatherDetails?(cityCellModel)
         }
-        return cityCellViewModel
+        return cityCellModel
     }
     
     func updateWeatherInfo(with info: WeatherInfoResponse) {
@@ -52,8 +52,8 @@ final class CityListViewModel: CityListViewModelType {
     
     private func addToCityList() {
         //Add to city list
-        if let cityCellViewModel  = createCellModel() {
-            cityCellViewModels.append(cityCellViewModel)
+        if let cityCellModel = createCellModel() {
+            cityCellModels.append(cityCellModel)
             reloadTable?()
         }
     }

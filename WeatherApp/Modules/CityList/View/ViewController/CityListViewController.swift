@@ -82,7 +82,7 @@ extension CityListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         let cellViewModel = viewModel.getCellViewModelAt(at: indexPath)
-        cell.cityCellViewModel = cellViewModel
+        cell.cityCellModel = cellViewModel
         cell.selectionStyle = .none
         return cell
     }

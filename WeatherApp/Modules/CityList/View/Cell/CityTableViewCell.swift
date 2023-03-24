@@ -14,11 +14,11 @@ class CityTableViewCell: UITableViewCell {
     static var identifier: String { return String(describing: self) }
     static var nib: UINib { return UINib(nibName: identifier, bundle: nil) }
     
-    var cityCellViewModel: CityCellViewModel? {
+    var cityCellModel: CityCellModel? {
         didSet {
-            cityNameLabel.text = cityCellViewModel?.cityName
-            temperatureLabel.text = "\(cityCellViewModel?.temperature ?? 0.0)\(Units.metric.temperatureUnit)"
-            weatherImageView.image = UIImage(named: cityCellViewModel?.icon ?? "")
+            cityNameLabel.text = cityCellModel?.cityName
+            temperatureLabel.text = "\(cityCellModel?.temperature ?? 0.0)\(Units.metric.temperatureUnit)"
+            weatherImageView.image = UIImage(named: cityCellModel?.icon ?? "")
         }
     }
     

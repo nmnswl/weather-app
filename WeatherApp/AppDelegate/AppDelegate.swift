@@ -8,8 +8,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private let appNavigator: Navigator = AppNavigator()
-    static let shared = UIApplication.shared.delegate as? AppDelegate ?? AppDelegate()
+    var appCoordinator: AppCoordinator?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -20,7 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate {
     func startApp() {
-        appNavigator.showCityListView()
+        guard let window = window else {
+            fatalError("No window available")
+        }
+        appCoordinator = AppCoordinator(window: window)
+        appCoordinator?.start()
     }
 }
 

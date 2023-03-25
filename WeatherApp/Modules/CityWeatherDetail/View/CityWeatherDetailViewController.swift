@@ -24,10 +24,7 @@ class CityWeatherDetailViewController: UIViewController {
     @IBOutlet private weak var windSpeedView: UIView!
     @IBOutlet private weak var visibilityView: UIView!
     
-    private lazy var viewModel: CityWeatherDetailViewModelType = {
-        return CityWeatherDetailViewModel()
-    }()
-    
+    private var viewModel: CityWeatherDetailViewModelType!
     private var cityName = ""
     private var unit = Units.metric
     private var navigationFrom: NavigationFrom = .addCity
@@ -42,6 +39,10 @@ class CityWeatherDetailViewController: UIViewController {
     }
     
     //MARK: - View model setup -
+    func bindViewModel(_ viewModel: CityWeatherDetailViewModelType) {
+        self.viewModel = viewModel
+    }
+    
     private func setupViewModel() {
         viewModel.showLoadingClosure = { [weak self] completion in
             guard let self = self else { return }
@@ -176,6 +177,6 @@ class CityWeatherDetailViewController: UIViewController {
     
     //MARK: - Button action -
     @IBAction private func actionBack(_ sender: UIButton) {
-        navigationController?.popToController(CityListViewController.self)
+        viewModel.didTapBack()
     }
 }

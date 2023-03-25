@@ -9,15 +9,15 @@ typealias WeatherDetailsPresentation = ((CityCellModel) -> Void)
 
 protocol CityListViewModelType {
     var reloadTable: ReloadClosure? { get set }
-    var showWeatherDetails: WeatherDetailsPresentation? { get set }
     func numberOfCities() -> Int
     func getCellViewModelAt(at indexPath: IndexPath) -> CityCellModel
     func updateWeatherInfo(with info: WeatherInfoResponse)
+    func addCity()
 }
 
 final class CityListViewModel: CityListViewModelType {
     var reloadTable: ReloadClosure?
-    var showWeatherDetails: WeatherDetailsPresentation?
+    weak var coordinatorDelegate: CityListViewModelToCoordinator?
     private var weatherInfo: WeatherInfoResponse? {
         didSet {
             addToCityList()
@@ -41,7 +41,7 @@ final class CityListViewModel: CityListViewModelType {
                                                   icon: weatherInfo.weather?.first?.icon ?? "")
         cityCellModel.didSelectCell = {
             //Handler for selecting a city
-            self.showWeatherDetails?(cityCellModel)
+            self.displayWeatherDetails()
         }
         return cityCellModel
     }
@@ -56,5 +56,17 @@ final class CityListViewModel: CityListViewModelType {
             cityCellModels.append(cityCellModel)
             reloadTable?()
         }
+    }
+    
+    func addCity() {
+        coordinatorDelegate?.addCity()
+    }
+    
+    private func displayWeatherDetails() {
+        guard let weatherInfo = weatherInfo,
+              let cityName = weatherInfo.name else {
+            return
+        }
+        coordinatorDelegate?.showWeatherDetails(for: cityName)
     }
 }

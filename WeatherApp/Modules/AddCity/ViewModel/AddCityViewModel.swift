@@ -8,10 +8,13 @@ protocol AddCityViewModelType {
     func updateCityName(with name: String)
     func isCityNameEntered() -> Bool
     func getCityName() -> String
+    func showWeatherDetails()
+    func didTapBack()
 }
 
 final class AddCityViewModel: AddCityViewModelType {
     private var cityName = ""
+    weak var coordinatorDelegate: AddCityViewModelToCoordinator?
     
     func isCityNameEntered() -> Bool {
         //Check if city name is blank
@@ -26,5 +29,13 @@ final class AddCityViewModel: AddCityViewModelType {
     func getCityName() -> String {
         //Returns city name
         cityName
+    }
+    
+    func showWeatherDetails() {
+        coordinatorDelegate?.showWeatherDetails(for: cityName)
+    }
+    
+    func didTapBack() {
+        coordinatorDelegate?.didTapBack()
     }
 }

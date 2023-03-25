@@ -10,9 +10,7 @@ class AddCityViewController: UIViewController {
     @IBOutlet private weak var cityNameTextField: UITextField!
     @IBOutlet private weak var addCityButton: UIButton!
     
-    private lazy var viewModel: AddCityViewModelType = {
-        return AddCityViewModel()
-    }()
+    private var viewModel: AddCityViewModelType!
     
     //MARK: - View life cycle -
     override func viewDidLoad() {
@@ -23,6 +21,11 @@ class AddCityViewController: UIViewController {
     //MARK: - UI setup -
     private func setupUI() {
         addCityButton.layer.cornerRadius = 10
+    }
+    
+    //MARK: - View model setup -
+    func bindViewModel(_ viewModel: AddCityViewModelType) {
+        self.viewModel = viewModel
     }
     
     //MARK: - Text field editing -
@@ -38,14 +41,11 @@ class AddCityViewController: UIViewController {
                                                             buttons: .ok(nil))
             return
         }
-        guard let detailViewController = UIStoryboard.main.instantiateViewController(identifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController,
-        let navigationController = AppDelegate.shared.window?.rootViewController as? UINavigationController else { return }
-        detailViewController.setCityName(as: viewModel.getCityName())
-        navigationController.pushViewController(detailViewController, animated: true)
+        viewModel.showWeatherDetails()
     }
     
     @IBAction private func actionBack(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        viewModel.didTapBack()
     }
 }
 

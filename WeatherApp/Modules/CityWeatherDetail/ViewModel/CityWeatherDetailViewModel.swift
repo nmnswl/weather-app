@@ -17,6 +17,7 @@ protocol BaseViewModel {
 protocol CityWeatherDetailViewModelType: BaseViewModel {
     var showWeatherInfo: ResponseCompletion? { get set }
     func fetchWeatherInfo(for city: String, in units: Units)
+    func didTapBack()
 }
 
 final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
@@ -24,10 +25,13 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
     var hideLoadingClosure: LoadingClosure?
     var showAlertClosure: AlertClosure?
     var showWeatherInfo: ResponseCompletion?
+    weak var coordinatorDelegate: CityWeatherViewModelToCoordinator?
     
-    private lazy var weatherInfoNetworkService: WeatherInfoNetworkServiceProtocol = {
-        return WeatherInfoNetworkService()
-    }()
+    private var weatherInfoNetworkService: WeatherInfoNetworkServiceProtocol
+    
+    init(networkService: WeatherInfoNetworkServiceProtocol) {
+        self.weatherInfoNetworkService = networkService
+    }
     
     /**
      Method to fetch weather info
@@ -48,5 +52,9 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
                 }
             }
         }
+    }
+    
+    func didTapBack() {
+        coordinatorDelegate?.didTapBack()
     }
 }

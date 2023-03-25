@@ -9,9 +9,7 @@ class CityListViewController: UIViewController {
     @IBOutlet private weak var noCityLabel: UILabel!
     @IBOutlet private weak var tableView: UITableView!
     
-    private lazy var viewModel: CityListViewModelType = {
-        CityListViewModel()
-    }()
+    private var viewModel: CityListViewModelType!
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -33,18 +31,15 @@ class CityListViewController: UIViewController {
     }
     
     //MARK: - View model setup -
+    func bindViewModel(_ viewModel: CityListViewModelType) {
+        self.viewModel = viewModel
+    }
+    
     private func setupViewModel() {
         viewModel.reloadTable = { [weak self] in
             guard let self = self else { return }
             self.noCityLabel.isHidden = true
             self.tableView.reloadData()
-        }
-        
-        viewModel.showWeatherDetails = { (cityViewModel) in
-            guard let detailViewController = UIStoryboard.main.instantiateViewController(withIdentifier: CityWeatherDetailViewController.identifier) as? CityWeatherDetailViewController,
-            let navigationController = AppDelegate.shared.window?.rootViewController as? UINavigationController else { return }
-            detailViewController.setCityName(as: cityViewModel.cityName ?? "", navigationFrom: .cityList)
-            navigationController.pushViewController(detailViewController, animated: true)
         }
     }
     
@@ -65,9 +60,7 @@ class CityListViewController: UIViewController {
     
     //MARK: - Button action -
     @IBAction private func addCityButtonAction(_ sender: UIButton) {
-        guard let addCityViewController = UIStoryboard.main.instantiateViewController(identifier: AddCityViewController.identifier) as? AddCityViewController,
-        let navigationController = AppDelegate.shared.window?.rootViewController as? UINavigationController else { return }
-        navigationController.pushViewController(addCityViewController, animated: true)
+        viewModel.addCity()
     }
 }
 

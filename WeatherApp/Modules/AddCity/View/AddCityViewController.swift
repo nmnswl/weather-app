@@ -39,9 +39,17 @@ class AddCityViewController: UIViewController {
             showAlertControllerWith(title: Constants.Alert.validationAlertTitle,
                                                             message: Constants.Alert.cityNameBlank,
                                                             buttons: .ok(nil))
-            return
+        } else if viewModel.cityNameContainsNumbers() {
+            showAlertControllerWith(title: Constants.Alert.validationAlertTitle,
+                                    message: Constants.Alert.cityNameContainsNumbers,
+                                    buttons: .ok(nil))
+        } else if viewModel.cityNameContainsSpecialCharacters() {
+            showAlertControllerWith(title: Constants.Alert.validationAlertTitle,
+                                    message: Constants.Alert.cityNameContainsSpecialCharacters,
+                                    buttons: .ok(nil))
+        } else {
+            viewModel.showWeatherDetails()
         }
-        viewModel.showWeatherDetails()
     }
     
     @IBAction private func actionBack(_ sender: UIButton) {

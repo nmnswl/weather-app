@@ -8,6 +8,8 @@ struct Constants {
     struct Alert {
         static let internetError = "Your device is not connected to the internet. Please check your network settings and try again."
         static let cityNameBlank = "Please enter city name"
+        static var cityNameContainsNumbers = "The name of the city must not contain numbers"
+        static var cityNameContainsSpecialCharacters = "The name of the city must not contain special characters"
         static let validationAlertTitle = "Validation Error"
         static let errorAlertTitle = "Error"
         static let serverError = "Server Error"

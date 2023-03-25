@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B32CC2429CF745F0080CF54 /* InputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B32CC2329CF745F0080CF54 /* InputValidator.swift */; };
 		1B4B8A2529C95F700026E9D1 /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A2429C95F700026E9D1 /* AddCityViewController.swift */; };
 		1B4B8A2729C95FB50026E9D1 /* AddCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A2629C95FB50026E9D1 /* AddCityViewModel.swift */; };
 		1B4B8A2A29C98C550026E9D1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A2929C98C550026E9D1 /* String+Extensions.swift */; };
@@ -57,6 +58,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B32CC2329CF745F0080CF54 /* InputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputValidator.swift; sourceTree = "<group>"; };
 		1B4B8A2429C95F700026E9D1 /* AddCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
 		1B4B8A2629C95FB50026E9D1 /* AddCityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewModel.swift; sourceTree = "<group>"; };
 		1B4B8A2929C98C550026E9D1 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -105,6 +107,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B32CC2529CF74640080CF54 /* InputValidator */ = {
+			isa = PBXGroup;
+			children = (
+				1B32CC2329CF745F0080CF54 /* InputValidator.swift */,
+			);
+			path = InputValidator;
+			sourceTree = "<group>";
+		};
 		1B4B8A2229C95F130026E9D1 /* AddCity */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +138,7 @@
 		1B4B8A2829C98C300026E9D1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				1B32CC2529CF74640080CF54 /* InputValidator */,
 				1B4B8A7329CA34E00026E9D1 /* StoryboardIdentifier */,
 				1B4B8A6C29CA29790026E9D1 /* NotificationManager */,
 				1B4B8A5129C9DA990026E9D1 /* Indicator */,
@@ -499,6 +510,7 @@
 				1B4B8A3429C98E8A0026E9D1 /* APIKeyHandler.swift in Sources */,
 				1B4B8A5329C9DAB30026E9D1 /* Indicator.swift in Sources */,
 				1B4B8A6E29CA299D0026E9D1 /* NotificationManager.swift in Sources */,
+				1B32CC2429CF745F0080CF54 /* InputValidator.swift in Sources */,
 				1B4B8A6629C9F9D50026E9D1 /* CityListViewController.swift in Sources */,
 				1B4B8A7029CA2ACE0026E9D1 /* UIStoryboard+Extensions.swift in Sources */,
 			);

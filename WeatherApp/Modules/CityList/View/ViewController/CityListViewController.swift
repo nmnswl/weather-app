@@ -3,6 +3,7 @@
 //  WeatherApp
 
 import UIKit
+import Combine
 
 class CityListViewController: UIViewController {
 
@@ -10,10 +11,7 @@ class CityListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     private var viewModel: CityListViewModelType!
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+    private var cancellable: AnyCancellable?
     
     //MARK: - View life cycle -
     override func viewDidLoad() {
@@ -45,17 +43,10 @@ class CityListViewController: UIViewController {
     
     //MARK: - Notification handling -
     private func addNotificationObserver() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(weatherInfoReceived),
-                                               name: .weatherInfoFetched,
-                                               object: nil)
-    }
-    
-    @objc private func weatherInfoReceived(notification: NSNotification) {
-        if let userInfo = notification.userInfo,
-           let weatherInfoResponse = userInfo[Constants.NotificationKeys.weatherInfo] as? WeatherInfoResponse {
-            viewModel.updateWeatherInfo(with: weatherInfoResponse)
-        }
+        cancellable = NotificationCenter.Publisher(center: .default, name: .weatherInfoFetched, object: nil).sink(receiveValue: { [weak self] notification in
+            guard let self = self, let weatherInfoResponse = notification.object as? WeatherInfoResponse else { return }
+            self.viewModel.updateWeatherInfo(with: weatherInfoResponse)
+        })
     }
     
     //MARK: - Button action -

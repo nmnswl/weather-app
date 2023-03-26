@@ -168,9 +168,7 @@ class CityWeatherDetailViewController: UIViewController {
         guard let weatherInfo = self.weatherInfo else { return }
         switch navigationFrom {
         case .addCity:
-            NotificationCenter.default.post(name: .weatherInfoFetched,
-                                            object: nil,
-                                            userInfo: [Constants.NotificationKeys.weatherInfo: weatherInfo])
+            NotificationCenter.default.post(name: .weatherInfoFetched, object: weatherInfo)
         default: break
         }
     }

@@ -51,7 +51,7 @@ class CityWeatherDetailViewController: UIViewController {
             self.view.hideIndicator()
         }
         
-        viewModel.showAlertClosure = { [weak self] (error) in
+        viewModel.showAlertClosure = { [weak self] (message, error) in
             guard let self = self else { return }
             if let apiError = error as? APIError {
                 switch apiError {
@@ -81,6 +81,11 @@ class CityWeatherDetailViewController: UIViewController {
                     }
                 default: break
                 }
+            } else if let alertMessage = message {
+                self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
+                                                                     message: alertMessage,
+                                                                     buttons: .ok(nil))
+                self.viewModel.fetchSavedData()
             } else {
                 self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
                                                                      message: Constants.Alert.generalError,

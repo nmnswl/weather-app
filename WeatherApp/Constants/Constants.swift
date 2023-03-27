@@ -11,6 +11,7 @@ struct Constants {
         static let cityNameContainsNumbers = "The name of the city must not contain numbers"
         static let cityNameContainsSpecialCharacters = "The name of the city must not contain special characters"
         static let cityAlreadyExists = "This city has already been added"
+        static let fetchDataError = "Could not fetch information"
         static let validationAlertTitle = "Validation Error"
         static let errorAlertTitle = "Error"
         static let serverError = "Server Error"

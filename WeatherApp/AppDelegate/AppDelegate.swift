@@ -15,6 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startApp()
         return true
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        stopMonitoring()
+    }
 }
 
 extension AppDelegate {
@@ -24,6 +28,15 @@ extension AppDelegate {
         }
         appCoordinator = AppCoordinator(window: window)
         appCoordinator?.start()
+        startMonitoring()
+    }
+    
+    private func startMonitoring() {
+        NetworkMonitor.shared.startMonitoring()
+    }
+    
+    private func stopMonitoring() {
+        NetworkMonitor.shared.stopMonitoring()
     }
 }
 

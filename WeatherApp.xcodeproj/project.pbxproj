@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		1B32CC2429CF745F0080CF54 /* InputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B32CC2329CF745F0080CF54 /* InputValidator.swift */; };
 		1B46D14629D0807F008CD132 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B46D14529D0807F008CD132 /* CoreDataManager.swift */; };
-		1B46D14829D083F0008CD132 /* WeatherInformation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B4B8A4629C9BDD80026E9D1 /* WeatherInformation.xcframework */; };
-		1B46D14929D083F0008CD132 /* WeatherInformation.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B4B8A4629C9BDD80026E9D1 /* WeatherInformation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B46D14D29D0B6B0008CD132 /* WeatherApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B46D14B29D0B6B0008CD132 /* WeatherApp.xcdatamodeld */; };
 		1B4B8A2529C95F700026E9D1 /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A2429C95F700026E9D1 /* AddCityViewController.swift */; };
 		1B4B8A2729C95FB50026E9D1 /* AddCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8A2629C95FB50026E9D1 /* AddCityViewModel.swift */; };
@@ -47,6 +45,9 @@
 		1BD13B8929D19E9C007189CC /* CityWeatherDetailViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD13B8829D19E9C007189CC /* CityWeatherDetailViewModelTest.swift */; };
 		1BD13B8B29D19F05007189CC /* MockWeatherInfoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD13B8A29D19F05007189CC /* MockWeatherInfoNetworkService.swift */; };
 		1BD13B8D29D1A648007189CC /* CityListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD13B8C29D1A648007189CC /* CityListViewModelTest.swift */; };
+		1BD13B9129D1DB93007189CC /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD13B9029D1DB93007189CC /* NetworkMonitor.swift */; };
+		1BD13B9329D1EE9D007189CC /* WeatherInformation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B4B8A4629C9BDD80026E9D1 /* WeatherInformation.xcframework */; };
+		1BD13B9429D1EE9D007189CC /* WeatherInformation.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B4B8A4629C9BDD80026E9D1 /* WeatherInformation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BF5D75329CA3B61007C7EAC /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF5D75229CA3B61007C7EAC /* UINavigationController+Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,13 +62,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1B46D14A29D083F0008CD132 /* Embed Frameworks */ = {
+		1BD13B9529D1EE9E007189CC /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1B46D14929D083F0008CD132 /* WeatherInformation.xcframework in Embed Frameworks */,
+				1BD13B9429D1EE9D007189CC /* WeatherInformation.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -117,6 +118,7 @@
 		1BD13B8829D19E9C007189CC /* CityWeatherDetailViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherDetailViewModelTest.swift; sourceTree = "<group>"; };
 		1BD13B8A29D19F05007189CC /* MockWeatherInfoNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWeatherInfoNetworkService.swift; sourceTree = "<group>"; };
 		1BD13B8C29D1A648007189CC /* CityListViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewModelTest.swift; sourceTree = "<group>"; };
+		1BD13B9029D1DB93007189CC /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		1BF5D75229CA3B61007C7EAC /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,7 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B46D14829D083F0008CD132 /* WeatherInformation.xcframework in Frameworks */,
+				1BD13B9329D1EE9D007189CC /* WeatherInformation.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +180,7 @@
 		1B4B8A2829C98C300026E9D1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				1BD13B9229D1DB98007189CC /* NetworkMonitor */,
 				1B46D14729D08085008CD132 /* CoreDataManager */,
 				1B32CC2529CF74640080CF54 /* InputValidator */,
 				1B4B8A7329CA34E00026E9D1 /* StoryboardIdentifier */,
@@ -451,6 +454,14 @@
 			path = WeatherAppTests;
 			sourceTree = "<group>";
 		};
+		1BD13B9229D1DB98007189CC /* NetworkMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				1BD13B9029D1DB93007189CC /* NetworkMonitor.swift */,
+			);
+			path = NetworkMonitor;
+			sourceTree = "<group>";
+		};
 		1BF5D75429CA3F78007C7EAC /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,7 +489,7 @@
 				1B83E14329C893AC00443D2D /* Sources */,
 				1B83E14429C893AC00443D2D /* Frameworks */,
 				1B83E14529C893AC00443D2D /* Resources */,
-				1B46D14A29D083F0008CD132 /* Embed Frameworks */,
+				1BD13B9529D1EE9E007189CC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -574,6 +585,7 @@
 				1B4B8A5029C9DA7B0026E9D1 /* UIView+Extensions.swift in Sources */,
 				1B4B8A3C29C9B5C20026E9D1 /* CityWeatherDetailViewModel.swift in Sources */,
 				1BA422FD29CE1F1600609DF2 /* AppCoordinator.swift in Sources */,
+				1BD13B9129D1DB93007189CC /* NetworkMonitor.swift in Sources */,
 				1BA4230029CE203900609DF2 /* CityListCoordinator.swift in Sources */,
 				1B4B8A6A29C9FC9D0026E9D1 /* CityTableViewCell.swift in Sources */,
 				1B4B8A3F29C9B6F70026E9D1 /* WeatherInfoNetworkService.swift in Sources */,

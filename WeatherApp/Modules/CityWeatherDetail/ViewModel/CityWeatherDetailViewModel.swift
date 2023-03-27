@@ -5,7 +5,7 @@
 import Foundation
 
 typealias LoadingClosure = (((() -> Void)?) -> Void)
-typealias AlertClosure = ((_ error: Error?) -> ())
+typealias AlertClosure = ((_ message: String?, _ error: Error?) -> ())
 typealias ResponseCompletion = ((WeatherInfoResponse) -> Void)
 
 protocol BaseViewModel {
@@ -59,6 +59,10 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
      - parameter units: Unit of measurement
      */
     func fetchWeatherInfo() {
+        if !NetworkMonitor.shared.isConnected {
+            showAlertClosure?(Constants.Alert.internetError, nil)
+            return
+        }
         self.showLoadingClosure?(nil)
         weatherInfoNetworkService.fetchWeatherInfo(for: cityName, in: units) { [weak self] result in
             DispatchQueue.main.async {
@@ -70,7 +74,7 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
                     self.postNotification(with: weatherInfo)
                     self.showWeatherInfo?(weatherInfo)
                 case .failure(let error):
-                    self.showAlertClosure?(error)
+                    self.showAlertClosure?(nil, error)
                 }
             }
         }
@@ -79,7 +83,6 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
     func fetchSavedData() {
         //Method to fetch saved weather info
         guard let weatherInfo = self.coreDataManager.fetchWeatherDetails(for: cityName) else {
-            showAlertClosure?(nil)
             return
         }
         self.showWeatherInfo?(weatherInfo)

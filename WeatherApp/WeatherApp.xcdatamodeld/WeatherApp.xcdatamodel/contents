@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Main" representedClassName="Main" syncable="YES">
+        <attribute name="humidity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pressure" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="temp" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="temp_max" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="temp_min" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="mainOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeatherInfoResponse" inverseName="main" inverseEntity="WeatherInfoResponse"/>
+    </entity>
+    <entity name="Weather" representedClassName="Weather" syncable="YES">
+        <attribute name="icon" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="main" optional="YES" attributeType="String"/>
+        <attribute name="weatherDescription" optional="YES" attributeType="String"/>
+        <relationship name="weatherOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeatherInfoResponse" inverseName="weather" inverseEntity="WeatherInfoResponse"/>
+    </entity>
+    <entity name="WeatherInfoResponse" representedClassName="WeatherInfoResponse" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="visibility" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="main" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Main" inverseName="mainOf" inverseEntity="Main"/>
+        <relationship name="weather" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Weather" inverseName="weatherOf" inverseEntity="Weather"/>
+        <relationship name="wind" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Wind" inverseName="windOf" inverseEntity="Wind"/>
+    </entity>
+    <entity name="Wind" representedClassName="Wind" syncable="YES">
+        <attribute name="speed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="windOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeatherInfoResponse" inverseName="wind" inverseEntity="WeatherInfoResponse"/>
+    </entity>
+</model>

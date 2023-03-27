@@ -12,12 +12,14 @@ protocol AddCityViewModelType {
     func didTapBack()
     func cityNameContainsNumbers() -> Bool
     func cityNameContainsSpecialCharacters() -> Bool
+    func checkIfCityAlreadyExists() -> Bool
 }
 
 final class AddCityViewModel: AddCityViewModelType {
     private var cityName = ""
     weak var coordinatorDelegate: AddCityViewModelToCoordinator?
     private let validator = InputValidator()
+    private let coreDataManager = CoreDataManager()
     
     func isCityNameEntered() -> Bool {
         //Check if city name is blank
@@ -50,5 +52,10 @@ final class AddCityViewModel: AddCityViewModelType {
     
     func didTapBack() {
         coordinatorDelegate?.didTapBack()
+    }
+    
+    func checkIfCityAlreadyExists() -> Bool {
+        //Check if the city is already saved
+        return coreDataManager.checkIfAlreadyExists(for: cityName)
     }
 }

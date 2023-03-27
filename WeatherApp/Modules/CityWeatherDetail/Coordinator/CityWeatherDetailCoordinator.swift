@@ -27,8 +27,8 @@ final class CityWeatherDetailCoordinator: Coordinator {
         let networkService = WeatherInfoNetworkService()
         let viewModel = CityWeatherDetailViewModel(networkService: networkService)
         viewModel.coordinatorDelegate = self
+        viewModel.setCityName(as: cityName, navigationFrom: navigationFrom)
         detailViewController.bindViewModel(viewModel)
-        detailViewController.setCityName(as: cityName)
         navigationController?.pushViewController(detailViewController, animated: true)
     }
 }

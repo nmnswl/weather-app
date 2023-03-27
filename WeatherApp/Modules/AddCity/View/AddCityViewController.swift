@@ -47,6 +47,10 @@ class AddCityViewController: UIViewController {
             showAlertControllerWith(title: Constants.Alert.validationAlertTitle,
                                     message: Constants.Alert.cityNameContainsSpecialCharacters,
                                     buttons: .ok(nil))
+        } else if viewModel.checkIfCityAlreadyExists() {
+            showAlertControllerWith(title: Constants.Alert.validationAlertTitle,
+                                                            message: Constants.Alert.cityAlreadyExists,
+                                                            buttons: .ok(nil))
         } else {
             viewModel.showWeatherDetails()
         }

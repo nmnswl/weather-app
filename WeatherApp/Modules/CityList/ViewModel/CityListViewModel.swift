@@ -13,18 +13,15 @@ protocol CityListViewModelType {
     func getCellViewModelAt(at indexPath: IndexPath) -> CityCellModel
     func updateWeatherInfo(with info: WeatherInfoResponse)
     func addCity()
+    func fetchAllCities()
 }
 
 final class CityListViewModel: CityListViewModelType {
     var reloadTable: ReloadClosure?
     weak var coordinatorDelegate: CityListViewModelToCoordinator?
-    private var weatherInfo: WeatherInfoResponse? {
-        didSet {
-            addToCityList()
-        }
-    }
     
     private var cityCellModels = [CityCellModel]()
+    let coreDataManager = CoreDataManager()
     
     func numberOfCities() -> Int {
         cityCellModels.count
@@ -34,25 +31,18 @@ final class CityListViewModel: CityListViewModelType {
         cityCellModels[indexPath.row]
     }
     
-    private func createCellModel() -> CityCellModel? {
-        guard let weatherInfo = weatherInfo else { return nil }
+    private func createCellModel(for weatherInfo: WeatherInfoResponse) -> CityCellModel? {
         var cityCellModel = CityCellModel(cityName: weatherInfo.name ?? "",
-                                                  temperature: weatherInfo.main?.temp ?? 0.0,
-                                                  icon: weatherInfo.weather?.first?.icon ?? "")
+                                          temperature: weatherInfo.main?.temp ?? 0.0,
+                                          icon: weatherInfo.weather?.first?.icon ?? "")
         cityCellModel.didSelectCell = {
-            //Handler for selecting a city
-            self.displayWeatherDetails()
+            self.displayWeatherDetails(for: weatherInfo.name)
         }
         return cityCellModel
     }
     
     func updateWeatherInfo(with info: WeatherInfoResponse) {
-        weatherInfo = info
-    }
-    
-    private func addToCityList() {
-        //Add to city list
-        if let cityCellModel = createCellModel() {
+        if let cityCellModel = createCellModel(for: info) {
             cityCellModels.append(cityCellModel)
             reloadTable?()
         }
@@ -62,11 +52,20 @@ final class CityListViewModel: CityListViewModelType {
         coordinatorDelegate?.addCity()
     }
     
-    private func displayWeatherDetails() {
-        guard let weatherInfo = weatherInfo,
-              let cityName = weatherInfo.name else {
-            return
-        }
+    private func displayWeatherDetails(for city: String?) {
+        guard let cityName = city else { return }
         coordinatorDelegate?.showWeatherDetails(for: cityName)
+    }
+    
+    func fetchAllCities() {
+        let cityArray = coreDataManager.fetchAll() ?? []
+        if !cityArray.isEmpty {
+            cityArray.forEach { weatherInfo in
+                if let cityCellModel = createCellModel(for: weatherInfo) {
+                    cityCellModels.append(cityCellModel)
+                }
+            }
+            reloadTable?()
+        }
     }
 }

@@ -25,9 +25,6 @@ class CityWeatherDetailViewController: UIViewController {
     @IBOutlet private weak var visibilityView: UIView!
     
     private var viewModel: CityWeatherDetailViewModelType!
-    private var cityName = ""
-    private var unit = Units.metric
-    private var navigationFrom: NavigationFrom = .addCity
     private var weatherInfo: WeatherInfoResponse?
 
     //MARK: - View life cycle -
@@ -76,6 +73,7 @@ class CityWeatherDetailViewController: UIViewController {
                         self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
                                                                              message: Constants.Alert.internetError,
                                                                              buttons: .ok(nil))
+                        self.viewModel.fetchSavedData()
                     } else {
                         self.showAlertControllerWith(title: Constants.Alert.errorAlertTitle,
                                                                              message: error.localizedDescription,
@@ -93,46 +91,38 @@ class CityWeatherDetailViewController: UIViewController {
         viewModel.showWeatherInfo = { [weak self] (weatherInfo) in
             guard let self = self else { return }
             self.weatherInfo = weatherInfo
-            self.postNotificationIfNecessary()
             self.setupUI()
         }
     }
     
     //MARK: - API calling
     private func loadWeatherDetails() {
-        viewModel.fetchWeatherInfo(for: cityName, in: unit)
+        viewModel.fetchWeatherInfo()
     }
-    
-    //MARK: - Handle city name
-    func setCityName(as name: String, navigationFrom: NavigationFrom = .addCity) {
-        cityName = name
-        self.navigationFrom = navigationFrom
-    }
-    
     
     //MARK: - View setup -
     private func initialViewSetup() {
         //Initial setup
-        cityNameLabel.text = cityName
+        cityNameLabel.text = viewModel.getCityName()
         weatherImageView.roundCornersWithRadius(10)
     }
     
     private func setupUI() {
         //Set up UI with weather response
         guard let weatherInfo = self.weatherInfo else { return }
-        let temperatureUnit = unit.temperatureUnit
-        let windSpeedUnit = unit.windSpeedUnit
+        let temperatureUnit = viewModel.getUnit().temperatureUnit
+        let windSpeedUnit = viewModel.getUnit().windSpeedUnit
         if let main = weatherInfo.main {
-            if let temp = main.temp {
-                temperatureLabel.text = "\(temp)\(temperatureUnit)"
+            if main.temp != Double.greatestFiniteMagnitude {
+                temperatureLabel.text = "\(main.temp)\(temperatureUnit)"
             } else {
                 //Default text when API does not return a temperature in the response
                 temperatureLabel.text = "--"
             }
-            minTempLabel.text = "\(main.temp_min ?? 0.0)\(temperatureUnit)"
-            maxTempLabel.text = "\(main.temp_max ?? 0.0)\(temperatureUnit)"
-            humidityLabel.text = "\(main.humidity ?? 0.0)%"
-            pressureLabel.text = "\(main.pressure ?? 0.0) hPa"
+            minTempLabel.text = "\(main.temp_min)\(temperatureUnit)"
+            maxTempLabel.text = "\(main.temp_max)\(temperatureUnit)"
+            humidityLabel.text = "\(main.humidity)%"
+            pressureLabel.text = "\(main.pressure) hPa"
             handleVisibilityOf(view: minTempView, when: main.temp_min)
             handleVisibilityOf(view: maxTempView, when: main.temp_min)
             handleVisibilityOf(view: humidityView, when: main.temp_min)
@@ -142,17 +132,17 @@ class CityWeatherDetailViewController: UIViewController {
             weatherImageView.image = UIImage(named: weather.icon ?? "")
             if let mainDescription = weather.main, !mainDescription.isEmpty {
                 weatherDescriptionLabel.text = weather.main
-            } else if let detailDescription = weather.description, !detailDescription.isEmpty {
+            } else if let detailDescription = weather.weatherDescription, !detailDescription.isEmpty {
                 weatherDescriptionLabel.text = weather.description
             }
         }
-        if let visibility = weatherInfo.visibility {
-            visibilityLabel.text = "\(visibility) metres"
+        if weatherInfo.visibility != Double.greatestFiniteMagnitude {
+            visibilityLabel.text = "\(weatherInfo.visibility) metres"
         } else {
             visibilityView.isHidden = true
         }
-        if let wind = weatherInfo.wind, let speed = wind.speed {
-            windSpeedLabel.text = "\(speed) \(windSpeedUnit)"
+        if let wind = weatherInfo.wind, wind.speed != Double.greatestFiniteMagnitude {
+            windSpeedLabel.text = "\(wind.speed) \(windSpeedUnit)"
         } else {
             windSpeedView.isHidden = true
         }
@@ -160,17 +150,7 @@ class CityWeatherDetailViewController: UIViewController {
     
     private func handleVisibilityOf(view: UIView, when value: Double?) {
         //Hide the view when the API does not provide some weather info in response
-        view.isHidden = value == nil
-    }
-    
-    //MARK: - Notification posting -
-    private func postNotificationIfNecessary() {
-        guard let weatherInfo = self.weatherInfo else { return }
-        switch navigationFrom {
-        case .addCity:
-            NotificationCenter.default.post(name: .weatherInfoFetched, object: weatherInfo)
-        default: break
-        }
+        view.isHidden = value == Double.greatestFiniteMagnitude
     }
     
     //MARK: - Button action -

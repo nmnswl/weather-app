@@ -18,6 +18,7 @@ class CityListViewController: UIViewController {
         super.viewDidLoad()
         setupViewModel()
         setupView()
+        fetchCities()
     }
     
     //MARK: - View setup -
@@ -39,6 +40,11 @@ class CityListViewController: UIViewController {
             self.noCityLabel.isHidden = true
             self.tableView.reloadData()
         }
+    }
+    
+    //MARK: - API calling -
+    private func fetchCities() {
+        viewModel.fetchAllCities()
     }
     
     //MARK: - Notification handling -

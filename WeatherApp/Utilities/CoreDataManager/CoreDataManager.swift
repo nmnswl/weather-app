@@ -80,5 +80,14 @@ final class CoreDataManager {
             return false
         }
     }
+    
+    /**
+     Method to delete object
+     - parameters: the object to delete
+     */
+    func deleteCity(with weatherInfo: WeatherInfoResponse) {
+        managedObjectContext.delete(weatherInfo)
+        save()
+    }
 }
 

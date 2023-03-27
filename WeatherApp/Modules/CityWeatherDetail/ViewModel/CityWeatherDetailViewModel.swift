@@ -66,8 +66,8 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
                 self.hideLoadingClosure?(nil)
                 switch result {
                 case .success(let weatherInfo):
-                    self.postNotificationIfNecessary(weatherInfo: weatherInfo)
                     self.coreDataManager.save()
+                    self.postNotification(with: weatherInfo)
                     self.showWeatherInfo?(weatherInfo)
                 case .failure(let error):
                     self.showAlertClosure?(error)
@@ -89,12 +89,7 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
         coordinatorDelegate?.didTapBack()
     }
     
-    private func postNotificationIfNecessary(weatherInfo: WeatherInfoResponse) {
-        //Handling notifications
-        switch navigationFrom {
-        case .addCity:
-            NotificationCenter.default.post(name: .weatherInfoFetched, object: weatherInfo)
-        default: break
-        }
+    private func postNotification(with weatherInfo: WeatherInfoResponse) {
+        NotificationCenter.default.post(name: .weatherInfoFetched, object: weatherInfo)
     }
 }

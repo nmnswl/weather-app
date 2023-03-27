@@ -19,9 +19,10 @@ protocol CityListViewModelType {
 final class CityListViewModel: CityListViewModelType {
     var reloadTable: ReloadClosure?
     weak var coordinatorDelegate: CityListViewModelToCoordinator?
-    
     private var cityCellModels = [CityCellModel]()
-    let coreDataManager = CoreDataManager()
+    private let coreDataManager = CoreDataManager()
+    private var cityArray: [WeatherInfoResponse] = []
+    private var selectedIndex: Int?
     
     func numberOfCities() -> Int {
         cityCellModels.count
@@ -42,8 +43,13 @@ final class CityListViewModel: CityListViewModelType {
     }
     
     func updateWeatherInfo(with info: WeatherInfoResponse) {
+        if let selectedIndex = selectedIndex {
+            let weatherInfo = self.cityArray[selectedIndex]
+            coreDataManager.deleteCity(with: weatherInfo)
+            cityCellModels.remove(at: selectedIndex)
+        }
         if let cityCellModel = createCellModel(for: info) {
-            cityCellModels.append(cityCellModel)
+            cityCellModels.insert(cityCellModel, at: 0)
             reloadTable?()
         }
     }
@@ -60,7 +66,8 @@ final class CityListViewModel: CityListViewModelType {
     func fetchAllCities() {
         let cityArray = coreDataManager.fetchAll() ?? []
         if !cityArray.isEmpty {
-            cityArray.forEach { weatherInfo in
+            self.cityArray = cityArray.reversed()
+            self.cityArray.forEach { weatherInfo in
                 if let cityCellModel = createCellModel(for: weatherInfo) {
                     cityCellModels.append(cityCellModel)
                 }

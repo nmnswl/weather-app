@@ -1,9 +1,6 @@
 //
 //  WeatherAppTests.swift
 //  WeatherAppTests
-//
-//  Created by TCS on 27/03/23.
-//
 
 import XCTest
 

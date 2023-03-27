@@ -1,9 +1,6 @@
 //
 //  CityWeatherDetailViewModelTest.swift
 //  WeatherAppTests
-//
-//  Created by TCS on 27/03/23.
-//
 
 import XCTest
 @testable import WeatherApp
@@ -58,6 +55,7 @@ final class CityWeatherDetailViewModelTest: XCTestCase {
         weatherInfoResponse.name = cityName
         
         cityWeatherDetailViewModel?.showWeatherInfo = { weatherInfo in
+            //Ensuring correct model is fetched
             XCTAssertEqual(weatherInfo.name, weatherInfoResponse.name)
             XCTAssertEqual(weatherInfo.weather?.first?.main, weatherInfoResponse.weather?.first?.main)
             XCTAssertEqual(weatherInfo.main?.temp, weatherInfoResponse.main?.temp)
@@ -79,6 +77,7 @@ final class CityWeatherDetailViewModelTest: XCTestCase {
         let expectation = expectation(description: "API hit with error")
         
         cityWeatherDetailViewModel?.showAlertClosure = { (error) in
+            //Ensuring that error is returned
             XCTAssertNotNil(error)
             expectation.fulfill()
         }

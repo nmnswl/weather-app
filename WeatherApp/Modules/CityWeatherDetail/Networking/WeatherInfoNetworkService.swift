@@ -5,7 +5,7 @@
 import Foundation
 import WeatherInformation
 
-typealias WebRequestCompletion = (Result<WeatherInfoResponse, Error>) -> Void
+typealias WebRequestCompletion = (Result<WeatherInfo, Error>) -> Void
 
 protocol WeatherInfoNetworkServiceProtocol {
     func fetchWeatherInfo(for city: String,
@@ -24,11 +24,8 @@ class WeatherInfoNetworkService: WeatherInfoNetworkServiceProtocol {
                           in units: Units,
                           completion: @escaping WebRequestCompletion) {
         let endpoint = UserEndpoints.fetchWeatherInfoForCity(city, units)
-        guard let codingUserInfoKeyManagedObjectContext = CodingUserInfoKey.managedObjectContext,
-              let request = URLRequest(endpoint: endpoint) else { return }
-        let decoder = JSONDecoder()
-        let coreDataManager = CoreDataManager()
-        decoder.userInfo[codingUserInfoKeyManagedObjectContext] = coreDataManager.managedObjectContext
-        APIManager.sharedInstance.makeRequest(request: request, decoder: decoder, completion: completion)
+        if let request = URLRequest(endpoint: endpoint) {
+            APIManager.sharedInstance.makeRequest(request: request, completion: completion)
+        }
     }
 }

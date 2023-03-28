@@ -11,7 +11,8 @@ class CityListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     private var viewModel: CityListViewModelType!
-    private var cancellable: AnyCancellable?
+    private var updateCancellable: AnyCancellable?
+    private var addCancellable: AnyCancellable?
     
     //MARK: - View life cycle -
     override func viewDidLoad() {
@@ -49,9 +50,13 @@ class CityListViewController: UIViewController {
     
     //MARK: - Notification handling -
     private func addNotificationObserver() {
-        cancellable = NotificationCenter.Publisher(center: .default, name: .weatherInfoFetched, object: nil).sink(receiveValue: { [weak self] notification in
-            guard let self = self, let weatherInfoResponse = notification.object as? WeatherInfoResponse else { return }
+        updateCancellable = NotificationCenter.Publisher(center: .default, name: .weatherToUpdate, object: nil).sink(receiveValue: { [weak self] notification in
+            guard let self = self, let weatherInfoResponse = notification.object as? WeatherInfo else { return }
             self.viewModel.updateWeatherInfo(with: weatherInfoResponse)
+        })
+        addCancellable = NotificationCenter.Publisher(center: .default, name: .weatherToAdd, object: nil).sink(receiveValue: { [weak self] notification in
+            guard let self = self, let weatherInfoResponse = notification.object as? WeatherInfoResponse else { return }
+            self.viewModel.addToList(with: weatherInfoResponse)
         })
     }
     
@@ -82,7 +87,8 @@ extension CityListViewController: UITableViewDataSource {
 extension CityListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellViewModel = viewModel.getCellViewModelAt(at: indexPath)
-        cellViewModel.didSelectCell?()
+        viewModel.updateSelectedIndex(with: indexPath.row)
+        viewModel.displayWeatherDetails(for: cellViewModel.cityName)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

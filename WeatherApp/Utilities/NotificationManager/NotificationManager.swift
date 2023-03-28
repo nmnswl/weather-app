@@ -5,5 +5,6 @@
 import Foundation
 
 extension Notification.Name {
-    static let weatherInfoFetched = Notification.Name("weatherInfoFetched")
+    static let weatherToUpdate = Notification.Name("weatherToUpdate")
+    static let weatherToAdd = Notification.Name("weatherToAdd")
 }

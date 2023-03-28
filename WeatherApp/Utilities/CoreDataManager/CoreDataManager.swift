@@ -5,11 +5,6 @@
 import Foundation
 import CoreData
 
-extension CodingUserInfoKey {
-    //Property to retrieve the context
-    static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")
-}
-
 final class CoreDataManager {
     lazy var persistentContainer: NSPersistentContainer = {
         let persistentContainer = NSPersistentContainer(name: "WeatherApp")
@@ -72,7 +67,7 @@ final class CoreDataManager {
     func checkIfAlreadyExists(for city: String) -> Bool {
         do {
             let fetchRequest = NSFetchRequest<WeatherInfoResponse>(entityName: "WeatherInfoResponse")
-            fetchRequest.predicate = NSPredicate(format: "name == %@", city)
+            fetchRequest.predicate = NSPredicate(format: "name ==[c] %@", city)
             let recordCount = try managedObjectContext.count(for: fetchRequest)
             return recordCount != 0
         } catch {

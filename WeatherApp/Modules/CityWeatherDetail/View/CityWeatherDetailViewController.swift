@@ -25,7 +25,7 @@ class CityWeatherDetailViewController: UIViewController {
     @IBOutlet private weak var visibilityView: UIView!
     
     private var viewModel: CityWeatherDetailViewModelType!
-    private var weatherInfo: WeatherInfoResponse?
+    private var weatherInfo: WeatherInfo?
 
     //MARK: - View life cycle -
     override func viewDidLoad() {
@@ -113,21 +113,21 @@ class CityWeatherDetailViewController: UIViewController {
     }
     
     private func setupUI() {
-        //Set up UI with weather response
+        //Set up UI with API response
         guard let weatherInfo = self.weatherInfo else { return }
         let temperatureUnit = viewModel.getUnit().temperatureUnit
         let windSpeedUnit = viewModel.getUnit().windSpeedUnit
         if let main = weatherInfo.main {
-            if main.temp != Double.greatestFiniteMagnitude {
-                temperatureLabel.text = "\(main.temp)\(temperatureUnit)"
+            if let temp = main.temp {
+                temperatureLabel.text = "\(temp)\(temperatureUnit)"
             } else {
                 //Default text when API does not return a temperature in the response
                 temperatureLabel.text = "--"
             }
-            minTempLabel.text = "\(main.temp_min)\(temperatureUnit)"
-            maxTempLabel.text = "\(main.temp_max)\(temperatureUnit)"
-            humidityLabel.text = "\(main.humidity)%"
-            pressureLabel.text = "\(main.pressure) hPa"
+            minTempLabel.text = "\(main.temp_min ?? 0.0)\(temperatureUnit)"
+            maxTempLabel.text = "\(main.temp_max ?? 0.0)\(temperatureUnit)"
+            humidityLabel.text = "\(main.humidity ?? 0.0)%"
+            pressureLabel.text = "\(main.pressure ?? 0.0) hPa"
             handleVisibilityOf(view: minTempView, when: main.temp_min)
             handleVisibilityOf(view: maxTempView, when: main.temp_min)
             handleVisibilityOf(view: humidityView, when: main.temp_min)
@@ -137,17 +137,17 @@ class CityWeatherDetailViewController: UIViewController {
             weatherImageView.image = UIImage(named: weather.icon ?? "")
             if let mainDescription = weather.main, !mainDescription.isEmpty {
                 weatherDescriptionLabel.text = weather.main
-            } else if let detailDescription = weather.weatherDescription, !detailDescription.isEmpty {
+            } else if let detailDescription = weather.description, !detailDescription.isEmpty {
                 weatherDescriptionLabel.text = weather.description
             }
         }
-        if weatherInfo.visibility != Double.greatestFiniteMagnitude {
-            visibilityLabel.text = "\(weatherInfo.visibility) metres"
+        if let visibility = weatherInfo.visibility {
+            visibilityLabel.text = "\(visibility) metres"
         } else {
             visibilityView.isHidden = true
         }
-        if let wind = weatherInfo.wind, wind.speed != Double.greatestFiniteMagnitude {
-            windSpeedLabel.text = "\(wind.speed) \(windSpeedUnit)"
+        if let wind = weatherInfo.wind, let speed = wind.speed {
+            windSpeedLabel.text = "\(speed) \(windSpeedUnit)"
         } else {
             windSpeedView.isHidden = true
         }

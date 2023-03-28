@@ -11,9 +11,12 @@ protocol CityListViewModelType {
     var reloadTable: ReloadClosure? { get set }
     func numberOfCities() -> Int
     func getCellViewModelAt(at indexPath: IndexPath) -> CityCellModel
-    func updateWeatherInfo(with info: WeatherInfoResponse)
+    func updateWeatherInfo(with info: WeatherInfo)
+    func addToList(with weatherInfo: WeatherInfoResponse)
     func addCity()
     func fetchAllCities()
+    func updateSelectedIndex(with index: Int)
+    func displayWeatherDetails(for city: String?)
 }
 
 final class CityListViewModel: CityListViewModelType {
@@ -33,23 +36,29 @@ final class CityListViewModel: CityListViewModelType {
     }
     
     private func createCellModel(for weatherInfo: WeatherInfoResponse) -> CityCellModel? {
-        var cityCellModel = CityCellModel(cityName: weatherInfo.name ?? "",
+        let cityCellModel = CityCellModel(cityName: weatherInfo.name ?? "",
                                           temperature: weatherInfo.main?.temp ?? 0.0,
                                           icon: weatherInfo.weather?.first?.icon ?? "")
-        cityCellModel.didSelectCell = {
-            self.displayWeatherDetails(for: weatherInfo.name)
-        }
         return cityCellModel
     }
     
-    func updateWeatherInfo(with info: WeatherInfoResponse) {
+    func updateWeatherInfo(with info: WeatherInfo) {
         if let selectedIndex = selectedIndex {
             let weatherInfo = self.cityArray[selectedIndex]
-            coreDataManager.deleteCity(with: weatherInfo)
-            cityCellModels.remove(at: selectedIndex)
+            weatherInfo.updateDetails(with: info)
+            coreDataManager.save()
+            if let cityCellModel = createCellModel(for: weatherInfo) {
+                cityCellModels.remove(at: selectedIndex)
+                cityCellModels.insert(cityCellModel, at: selectedIndex)
+                reloadTable?()
+            }
         }
-        if let cityCellModel = createCellModel(for: info) {
-            cityCellModels.insert(cityCellModel, at: 0)
+        self.selectedIndex = nil
+    }
+    
+    func addToList(with weatherInfo: WeatherInfoResponse) {
+        if let cityCellModel = createCellModel(for: weatherInfo) {
+            cityCellModels.append(cityCellModel)
             reloadTable?()
         }
     }
@@ -58,21 +67,24 @@ final class CityListViewModel: CityListViewModelType {
         coordinatorDelegate?.addCity()
     }
     
-    private func displayWeatherDetails(for city: String?) {
+    func displayWeatherDetails(for city: String?) {
         guard let cityName = city else { return }
         coordinatorDelegate?.showWeatherDetails(for: cityName)
     }
     
     func fetchAllCities() {
-        let cityArray = coreDataManager.fetchAll() ?? []
+        cityArray = coreDataManager.fetchAll() ?? []
         if !cityArray.isEmpty {
-            self.cityArray = cityArray.reversed()
-            self.cityArray.forEach { weatherInfo in
+            cityArray.forEach { weatherInfo in
                 if let cityCellModel = createCellModel(for: weatherInfo) {
                     cityCellModels.append(cityCellModel)
                 }
             }
             reloadTable?()
         }
+    }
+    
+    func updateSelectedIndex(with index: Int) {
+        selectedIndex = index
     }
 }

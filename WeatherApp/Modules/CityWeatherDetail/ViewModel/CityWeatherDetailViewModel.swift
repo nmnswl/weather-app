@@ -6,7 +6,7 @@ import Foundation
 
 typealias LoadingClosure = (((() -> Void)?) -> Void)
 typealias AlertClosure = ((_ message: String?, _ error: Error?) -> ())
-typealias ResponseCompletion = ((WeatherInfoResponse) -> Void)
+typealias ResponseCompletion = ((WeatherInfo) -> Void)
 
 protocol BaseViewModel {
     var showLoadingClosure: LoadingClosure? { get set }
@@ -70,8 +70,7 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
                 self.hideLoadingClosure?(nil)
                 switch result {
                 case .success(let weatherInfo):
-                    self.coreDataManager.save()
-                    self.postNotification(with: weatherInfo)
+                    self.saveOrUpdate(weatherInfo: weatherInfo)
                     self.showWeatherInfo?(weatherInfo)
                 case .failure(let error):
                     self.showAlertClosure?(nil, error)
@@ -82,7 +81,8 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
     
     func fetchSavedData() {
         //Method to fetch saved weather info
-        guard let weatherInfo = self.coreDataManager.fetchWeatherDetails(for: cityName) else {
+        guard let weatherManagedObject = coreDataManager.fetchWeatherDetails(for: cityName),
+              let weatherInfo = weatherManagedObject.convertToModel() else {
             return
         }
         self.showWeatherInfo?(weatherInfo)
@@ -92,7 +92,32 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
         coordinatorDelegate?.didTapBack()
     }
     
-    private func postNotification(with weatherInfo: WeatherInfoResponse) {
-        NotificationCenter.default.post(name: .weatherInfoFetched, object: weatherInfo)
+    private func postUpdateNotification(with weatherInfo: WeatherInfo) {
+        NotificationCenter.default.post(name: .weatherToUpdate, object: weatherInfo)
+    }
+    
+    private func postNewEntryNotification(with weatherInfo: WeatherInfoResponse) {
+        NotificationCenter.default.post(name: .weatherToAdd, object: weatherInfo)
+    }
+    
+    func saveInCoreData(weatherInfo: WeatherInfo) {
+        //Save response to core data and update city list
+        guard let weatherInfoManagedObject = weatherInfo.convertToManagedObject(in: coreDataManager.managedObjectContext) else { return }
+        coreDataManager.save()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.postNewEntryNotification(with: weatherInfoManagedObject)
+        }
+    }
+    
+    private func saveOrUpdate(weatherInfo: WeatherInfo) {
+        switch navigationFrom {
+        case .addCity:
+            saveInCoreData(weatherInfo: weatherInfo)
+        case .cityList:
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.postUpdateNotification(with: weatherInfo)
+            }
+        default: break
+        }
     }
 }

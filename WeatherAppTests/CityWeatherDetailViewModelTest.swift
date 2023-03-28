@@ -76,7 +76,7 @@ final class CityWeatherDetailViewModelTest: XCTestCase {
         
         let expectation = expectation(description: "API hit with error")
         
-        cityWeatherDetailViewModel?.showAlertClosure = { (error) in
+        cityWeatherDetailViewModel?.showAlertClosure = { (message, error) in
             //Ensuring that error is returned
             XCTAssertNotNil(error)
             expectation.fulfill()

@@ -18,10 +18,6 @@ class MockWeatherInfoNetworkService: WeatherInfoNetworkServiceProtocol {
     var mockErrorResponse: Error?
     let coreDataManager = CoreDataManager()
     
-    init(status: Status) {
-        self.status = status
-    }
-    
     func fetchWeatherInfo(for city: String, in units: WeatherApp.Units, completion: @escaping WeatherApp.WebRequestCompletion) {
         isFetchWeatherInfo = true
         let mockResponse = generateMockDataResponse()
@@ -33,32 +29,12 @@ class MockWeatherInfoNetworkService: WeatherInfoNetworkServiceProtocol {
         }
     }
     
-    func generateMockDataResponse() -> WeatherInfoResponse {
+    func generateMockDataResponse() -> WeatherInfo {
+        let weather = WeatherModel(id: 1, main: "Cloudy", description: "Cloudy sky", icon: "01d")
+        let main = MainModel(temp: 20.01, pressure: 1006, humidity: 32, temp_min: 19.01, temp_max: 22.01)
+        let wind = WindModel(speed: 6.15)
         let cityName = "Goa"
-        
-        let weather = Weather(context: coreDataManager.managedObjectContext)
-        weather.id = 1
-        weather.main = "Cloudy"
-        weather.weatherDescription = "Cloudy sky"
-        weather.icon = "01d"
-        
-        let main = Main(context: coreDataManager.managedObjectContext)
-        main.temp = 20.01
-        main.pressure = 1006
-        main.humidity = 32
-        main.temp_min = 19.01
-        main.temp_max = 22.01
-        
-        let wind = Wind(context: coreDataManager.managedObjectContext)
-        wind.speed = 6.15
-        
-        let weatherInfoResponse = WeatherInfoResponse(context: coreDataManager.managedObjectContext)
-        weatherInfoResponse.weather = [weather]
-        weatherInfoResponse.main = main
-        weatherInfoResponse.wind = wind
-        weatherInfoResponse.visibility = 10000
-        weatherInfoResponse.name = cityName
-        
-        return weatherInfoResponse
+        let weatherInfoModel = WeatherInfo(weather: [weather], main: main, wind: wind, visibility: 10000, name: cityName)
+        return weatherInfoModel
     }
 }

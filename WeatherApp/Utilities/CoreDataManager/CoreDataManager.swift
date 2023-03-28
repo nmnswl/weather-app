@@ -9,7 +9,7 @@ final class CoreDataManager {
     lazy var persistentContainer: NSPersistentContainer = {
         let persistentContainer = NSPersistentContainer(name: "WeatherApp")
         persistentContainer.loadPersistentStores { persistentStoreDescription, error in
-            print(error?.localizedDescription ?? "")
+            debugPrint(error?.localizedDescription ?? "")
         }
         return persistentContainer
     }()
@@ -25,7 +25,7 @@ final class CoreDataManager {
         do {
             try managedObjectContext.save()
         } catch {
-            print(error.localizedDescription)
+            debugPrint(error.localizedDescription)
         }
     }
     
@@ -39,7 +39,7 @@ final class CoreDataManager {
             let weatherInfo = try managedObjectContext.fetch(fetchRequest)
             return weatherInfo
         } catch {
-            print(error.localizedDescription)
+            debugPrint(error.localizedDescription)
             return nil
         }
     }
@@ -55,7 +55,7 @@ final class CoreDataManager {
             let weatherInfo = try managedObjectContext.fetch(fetchRequest)
             return weatherInfo.last
         } catch {
-            print(error.localizedDescription)
+            debugPrint(error.localizedDescription)
             return nil
         }
     }
@@ -71,18 +71,9 @@ final class CoreDataManager {
             let recordCount = try managedObjectContext.count(for: fetchRequest)
             return recordCount != 0
         } catch {
-            print(error.localizedDescription)
+            debugPrint(error.localizedDescription)
             return false
         }
-    }
-    
-    /**
-     Method to delete object
-     - parameters: the object to delete
-     */
-    func deleteCity(with weatherInfo: WeatherInfoResponse) {
-        managedObjectContext.delete(weatherInfo)
-        save()
     }
 }
 

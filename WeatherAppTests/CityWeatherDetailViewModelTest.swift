@@ -13,6 +13,8 @@ final class CityWeatherDetailViewModelTest: XCTestCase {
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        weatherInfoService = MockWeatherInfoNetworkService()
+        cityWeatherDetailViewModel = CityWeatherDetailViewModel(networkService: weatherInfoService!)
         coreDataManager = CoreDataManager()
     }
 
@@ -24,42 +26,23 @@ final class CityWeatherDetailViewModelTest: XCTestCase {
     }
 
     func testFetchWeatherInfo_Success() throws {
-        weatherInfoService = MockWeatherInfoNetworkService(status: .success)
-        cityWeatherDetailViewModel = CityWeatherDetailViewModel(networkService: weatherInfoService!)
+        weatherInfoService?.status = .success
         let cityName = "Goa"
         cityWeatherDetailViewModel?.setCityName(as: cityName)
         
         let expectation = expectation(description: "API hit with success")
         
-        let weather = Weather(context: coreDataManager.managedObjectContext)
-        weather.id = 1
-        weather.main = "Cloudy"
-        weather.weatherDescription = "Cloudy sky"
-        weather.icon = "01d"
-        
-        let main = Main(context: coreDataManager.managedObjectContext)
-        main.temp = 20.01
-        main.pressure = 1006
-        main.humidity = 32
-        main.temp_min = 19.01
-        main.temp_max = 22.01
-        
-        let wind = Wind(context: coreDataManager.managedObjectContext)
-        wind.speed = 6.15
-        
-        let weatherInfoResponse = WeatherInfoResponse(context: coreDataManager.managedObjectContext)
-        weatherInfoResponse.weather = [weather]
-        weatherInfoResponse.main = main
-        weatherInfoResponse.wind = wind
-        weatherInfoResponse.visibility = 10000
-        weatherInfoResponse.name = cityName
+        let weather = WeatherModel(id: 1, main: "Cloudy", description: "Cloudy sky", icon: "01d")
+        let main = MainModel(temp: 20.01, pressure: 1006, humidity: 32, temp_min: 19.01, temp_max: 22.01)
+        let wind = WindModel(speed: 6.15)
+        let weatherInfoModel = WeatherInfo(weather: [weather], main: main, wind: wind, visibility: 10000, name: cityName)
         
         cityWeatherDetailViewModel?.showWeatherInfo = { weatherInfo in
             //Ensuring correct model is fetched
-            XCTAssertEqual(weatherInfo.name, weatherInfoResponse.name)
-            XCTAssertEqual(weatherInfo.weather?.first?.main, weatherInfoResponse.weather?.first?.main)
-            XCTAssertEqual(weatherInfo.main?.temp, weatherInfoResponse.main?.temp)
-            XCTAssertEqual(weatherInfo.wind?.speed, weatherInfoResponse.wind?.speed)
+            XCTAssertEqual(weatherInfo.name, weatherInfoModel.name)
+            XCTAssertEqual(weatherInfo.weather?.first?.main, weatherInfoModel.weather?.first?.main)
+            XCTAssertEqual(weatherInfo.main?.temp, weatherInfoModel.main?.temp)
+            XCTAssertEqual(weatherInfo.wind?.speed, weatherInfoModel.wind?.speed)
             expectation.fulfill()
         }
         
@@ -69,8 +52,7 @@ final class CityWeatherDetailViewModelTest: XCTestCase {
     }
     
     func testFetchWeatherInfo_Error() throws {
-        weatherInfoService = MockWeatherInfoNetworkService(status: .error)
-        cityWeatherDetailViewModel = CityWeatherDetailViewModel(networkService: weatherInfoService!)
+        weatherInfoService?.status = .error
         let cityName = "Goa"
         cityWeatherDetailViewModel?.setCityName(as: cityName)
         
@@ -85,5 +67,11 @@ final class CityWeatherDetailViewModelTest: XCTestCase {
         cityWeatherDetailViewModel?.fetchWeatherInfo()
         
         wait(for: [expectation], timeout: 2.0)
+    }
+    
+    func testIfCityNameIsSet() throws {
+        let expectedCityName = "Goa"
+        cityWeatherDetailViewModel?.setCityName(as: expectedCityName)
+        XCTAssertEqual(expectedCityName, cityWeatherDetailViewModel?.getCityName())
     }
 }

@@ -48,10 +48,12 @@ final class CityListViewModelTest: XCTestCase {
         weatherInfoResponse.visibility = 10000
         weatherInfoResponse.name = cityName
         
-        viewModel.updateWeatherInfo(with: weatherInfoResponse)
+        viewModel.addToList(with: weatherInfoResponse)
+        
+        let expectedNumberOfCities = 1
         
         //Ensuring correct number of cities
-        XCTAssertEqual(viewModel.numberOfCities(), 1)
+        XCTAssertEqual(expectedNumberOfCities, viewModel.numberOfCities())
     }
     
     func testFetchingCityCellModel() throws {
@@ -80,7 +82,7 @@ final class CityListViewModelTest: XCTestCase {
         weatherInfoResponse.visibility = 10000
         weatherInfoResponse.name = cityName
         
-        viewModel.updateWeatherInfo(with: weatherInfoResponse)
+        viewModel.addToList(with: weatherInfoResponse)
         
         let indexPath = IndexPath(row: 0, section: 0)
         let fetchedCityCellModel = viewModel.getCellViewModelAt(at: indexPath)

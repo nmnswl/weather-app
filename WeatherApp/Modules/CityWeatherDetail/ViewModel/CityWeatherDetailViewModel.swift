@@ -70,7 +70,7 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
                 self.hideLoadingClosure?(nil)
                 switch result {
                 case .success(let weatherInfo):
-                    self.saveOrUpdate(weatherInfo: weatherInfo)
+                    self.save(weatherInfo: weatherInfo)
                     self.showWeatherInfo?(weatherInfo)
                 case .failure(let error):
                     self.showAlertClosure?(nil, error)
@@ -92,10 +92,6 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
         coordinatorDelegate?.didTapBack()
     }
     
-    private func postUpdateNotification(with weatherInfo: WeatherInfo) {
-        NotificationCenter.default.post(name: .weatherToUpdate, object: weatherInfo)
-    }
-    
     private func postNewEntryNotification(with weatherInfo: WeatherInfoResponse) {
         NotificationCenter.default.post(name: .weatherToAdd, object: weatherInfo)
     }
@@ -109,14 +105,10 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
         }
     }
     
-    private func saveOrUpdate(weatherInfo: WeatherInfo) {
+    private func save(weatherInfo: WeatherInfo) {
         switch navigationFrom {
         case .addCity:
             saveInCoreData(weatherInfo: weatherInfo)
-        case .cityList:
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.postUpdateNotification(with: weatherInfo)
-            }
         default: break
         }
     }

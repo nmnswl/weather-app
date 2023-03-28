@@ -40,7 +40,6 @@
 		1BA4230029CE203900609DF2 /* CityListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA422FF29CE203900609DF2 /* CityListCoordinator.swift */; };
 		1BA4230429CE23CB00609DF2 /* AddCityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA4230329CE23CB00609DF2 /* AddCityCoordinator.swift */; };
 		1BA4230729CE253500609DF2 /* CityWeatherDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA4230629CE253500609DF2 /* CityWeatherDetailCoordinator.swift */; };
-		1BB45B3729D17624002111A4 /* WeatherAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB45B3629D17624002111A4 /* WeatherAppTests.swift */; };
 		1BD13B8729D19D03007189CC /* AddCityViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD13B8629D19D03007189CC /* AddCityViewModelTest.swift */; };
 		1BD13B8929D19E9C007189CC /* CityWeatherDetailViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD13B8829D19E9C007189CC /* CityWeatherDetailViewModelTest.swift */; };
 		1BD13B8B29D19F05007189CC /* MockWeatherInfoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD13B8A29D19F05007189CC /* MockWeatherInfoNetworkService.swift */; };
@@ -114,7 +113,6 @@
 		1BA4230329CE23CB00609DF2 /* AddCityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityCoordinator.swift; sourceTree = "<group>"; };
 		1BA4230629CE253500609DF2 /* CityWeatherDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherDetailCoordinator.swift; sourceTree = "<group>"; };
 		1BB45B3429D17624002111A4 /* WeatherAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1BB45B3629D17624002111A4 /* WeatherAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppTests.swift; sourceTree = "<group>"; };
 		1BD13B8629D19D03007189CC /* AddCityViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewModelTest.swift; sourceTree = "<group>"; };
 		1BD13B8829D19E9C007189CC /* CityWeatherDetailViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherDetailViewModelTest.swift; sourceTree = "<group>"; };
 		1BD13B8A29D19F05007189CC /* MockWeatherInfoNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWeatherInfoNetworkService.swift; sourceTree = "<group>"; };
@@ -448,7 +446,6 @@
 		1BB45B3529D17624002111A4 /* WeatherAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				1BB45B3629D17624002111A4 /* WeatherAppTests.swift */,
 				1BD13B8629D19D03007189CC /* AddCityViewModelTest.swift */,
 				1BD13B8829D19E9C007189CC /* CityWeatherDetailViewModelTest.swift */,
 				1BD13B8A29D19F05007189CC /* MockWeatherInfoNetworkService.swift */,
@@ -626,7 +623,6 @@
 			files = (
 				1BD13B8929D19E9C007189CC /* CityWeatherDetailViewModelTest.swift in Sources */,
 				1BD13B8D29D1A648007189CC /* CityListViewModelTest.swift in Sources */,
-				1BB45B3729D17624002111A4 /* WeatherAppTests.swift in Sources */,
 				1BD13B8729D19D03007189CC /* AddCityViewModelTest.swift in Sources */,
 				1BD13B8B29D19F05007189CC /* MockWeatherInfoNetworkService.swift in Sources */,
 			);

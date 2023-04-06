@@ -9,6 +9,8 @@ final class CoreDataManager {
     
     static let shared = CoreDataManager()
     
+    private init() {}
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let persistentContainer = NSPersistentContainer(name: "WeatherApp")
         persistentContainer.loadPersistentStores { persistentStoreDescription, error in

@@ -18,12 +18,18 @@ protocol AddCityViewModelType {
 final class AddCityViewModel: AddCityViewModelType {
     private var cityName = ""
     weak var coordinatorDelegate: AddCityViewModelToCoordinator?
-    private let validator = InputValidator()
-    private let coreDataManager = CoreDataManager()
+    private let validator: InputValidator
+    private let coreDataManager: CoreDataManager
+    
+    init(inputValidator: InputValidator = InputValidator(),
+         coreDataManager: CoreDataManager = .shared) {
+        validator = inputValidator
+        self.coreDataManager = coreDataManager
+    }
     
     func isCityNameEntered() -> Bool {
         //Check if city name is blank
-        !cityName.isEmpty
+        !validator.isEmpty(string: cityName)
     }
     
     func updateCityName(with name: String) {

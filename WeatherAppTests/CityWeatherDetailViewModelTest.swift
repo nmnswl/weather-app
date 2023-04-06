@@ -9,20 +9,17 @@ final class CityWeatherDetailViewModelTest: XCTestCase {
 
     var weatherInfoService: MockWeatherInfoNetworkService?
     var cityWeatherDetailViewModel: CityWeatherDetailViewModel?
-    var coreDataManager: CoreDataManager!
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         weatherInfoService = MockWeatherInfoNetworkService()
         cityWeatherDetailViewModel = CityWeatherDetailViewModel(networkService: weatherInfoService!)
-        coreDataManager = CoreDataManager()
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         weatherInfoService = nil
         cityWeatherDetailViewModel = nil
-        coreDataManager = nil
     }
 
     func testFetchWeatherInfo_Success() throws {

@@ -16,7 +16,6 @@ class MockWeatherInfoNetworkService: WeatherInfoNetworkServiceProtocol {
     var status = Status.success
     var completion: WebRequestCompletion?
     var mockErrorResponse: Error?
-    let coreDataManager = CoreDataManager()
     
     func fetchWeatherInfo(for city: String, in units: WeatherApp.Units, completion: @escaping WeatherApp.WebRequestCompletion) {
         isFetchWeatherInfo = true

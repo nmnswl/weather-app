@@ -31,13 +31,14 @@ final class CityWeatherDetailViewModel: CityWeatherDetailViewModelType {
     weak var coordinatorDelegate: CityWeatherViewModelToCoordinator?
     
     private var weatherInfoNetworkService: WeatherInfoNetworkServiceProtocol
-    private let coreDataManager = CoreDataManager()
+    private let coreDataManager: CoreDataManager
     private var cityName = ""
     private var navigationFrom: NavigationFrom = .addCity
     private let units = Units.metric
     
-    init(networkService: WeatherInfoNetworkServiceProtocol) {
+    init(networkService: WeatherInfoNetworkServiceProtocol, coreDataManager: CoreDataManager = .shared) {
         self.weatherInfoNetworkService = networkService
+        self.coreDataManager = coreDataManager
     }
     
     func setCityName(as name: String, navigationFrom: NavigationFrom = .addCity) {

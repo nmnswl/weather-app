@@ -21,8 +21,12 @@ final class CityListViewModel: CityListViewModelType {
     var reloadTable: ReloadClosure?
     weak var coordinatorDelegate: CityListViewModelToCoordinator?
     private var cityCellModels = [CityCellModel]()
-    private let coreDataManager = CoreDataManager()
+    private let coreDataManager: CoreDataManager
     private var cityArray: [WeatherInfoResponse] = []
+    
+    init(coreDataManager: CoreDataManager = .shared) {
+        self.coreDataManager = coreDataManager
+    }
     
     func numberOfCities() -> Int {
         cityCellModels.count

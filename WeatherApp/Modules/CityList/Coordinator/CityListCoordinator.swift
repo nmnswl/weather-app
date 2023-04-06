@@ -10,7 +10,7 @@ protocol CityListViewModelToCoordinator: AnyObject {
     func showWeatherDetails(for city: String)
 }
 
-protocol Poppable {
+protocol Poppable: AnyObject {
     func didTapBack(coordinator: Coordinator, navigationFrom: NavigationFrom)
 }
 
@@ -44,7 +44,7 @@ extension CityListCoordinator: CityListViewModelToCoordinator {
     func addCity() {
         guard let navigationController = self.navigationController else { return }
         let addCityCoordinator = AddCityCoordinator(navigationController: navigationController)
-        addCityCoordinator.parentCoordinator = self
+        addCityCoordinator.parentCoordinatorDelegate = self
         addCityCoordinator.start()
         self.addChild(addCityCoordinator)
     }
@@ -52,7 +52,7 @@ extension CityListCoordinator: CityListViewModelToCoordinator {
     func showWeatherDetails(for city: String) {
         guard let navigationController = navigationController else { return }
         let cityWeatherCoordinator = CityWeatherDetailCoordinator(navigationController: navigationController, cityName: city, navigationFrom: .cityList)
-        cityWeatherCoordinator.parentCoordinator = self
+        cityWeatherCoordinator.parentCoordinatorDelegate = self
         cityWeatherCoordinator.start()
         self.addChild(cityWeatherCoordinator)
     }

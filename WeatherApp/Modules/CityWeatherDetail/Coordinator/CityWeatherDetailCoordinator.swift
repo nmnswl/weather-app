@@ -13,7 +13,7 @@ final class CityWeatherDetailCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController?
     var cityName = ""
-    var parentCoordinator: Poppable?
+    weak var parentCoordinatorDelegate: Poppable?
     var navigationFrom: NavigationFrom = .cityList
     
     init(navigationController: UINavigationController, cityName: String, navigationFrom: NavigationFrom) {
@@ -35,6 +35,6 @@ final class CityWeatherDetailCoordinator: Coordinator {
 
 extension CityWeatherDetailCoordinator: CityWeatherViewModelToCoordinator {
     func didTapBack() {
-        parentCoordinator?.didTapBack(coordinator: self, navigationFrom: navigationFrom)
+        parentCoordinatorDelegate?.didTapBack(coordinator: self, navigationFrom: navigationFrom)
     }
 }

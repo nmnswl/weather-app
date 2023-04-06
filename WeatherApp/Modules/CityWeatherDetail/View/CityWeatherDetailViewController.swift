@@ -155,7 +155,7 @@ class CityWeatherDetailViewController: UIViewController {
     
     private func handleVisibilityOf(view: UIView, when value: Double?) {
         //Hide the view when the API does not provide some weather info in response
-        view.isHidden = value == Double.greatestFiniteMagnitude
+        view.isHidden = value == nil
     }
     
     //MARK: - Button action -

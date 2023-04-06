@@ -6,6 +6,9 @@ import Foundation
 import CoreData
 
 final class CoreDataManager {
+    
+    static let shared = CoreDataManager()
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let persistentContainer = NSPersistentContainer(name: "WeatherApp")
         persistentContainer.loadPersistentStores { persistentStoreDescription, error in
